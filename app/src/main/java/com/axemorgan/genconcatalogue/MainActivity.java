@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements EventUpdateBroadc
 
     private static final String TAG_EVENT_LIST = "EVENT_LIST";
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.loading_bottom_sheet)
     View bottomSheet;
     @BindView(R.id.navigation)
@@ -57,7 +60,9 @@ public class MainActivity extends AppCompatActivity implements EventUpdateBroadc
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        if(savedInstanceState == null) {
+        this.setSupportActionBar(toolbar);
+
+        if (savedInstanceState == null) {
             this.showListFragment();
         }
 
