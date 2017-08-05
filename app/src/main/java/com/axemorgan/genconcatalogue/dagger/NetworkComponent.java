@@ -1,6 +1,6 @@
 package com.axemorgan.genconcatalogue.dagger;
 
-import com.axemorgan.genconcatalogue.EventUpdateService;
+import com.axemorgan.genconcatalogue.events.EventUpdateService;
 
 import dagger.Component;
 

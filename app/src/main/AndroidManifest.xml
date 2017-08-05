@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".EventUpdateService"/>
+        <service android:name=".events.EventUpdateService"/>
     </application>
 
 </manifest>

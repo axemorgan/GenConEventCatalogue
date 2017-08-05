@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.axemorgan.genconcatalogue.events.EventUpdateService;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
