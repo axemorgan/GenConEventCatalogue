@@ -1,5 +1,6 @@
 package com.axemorgan.genconcatalogue.event_list;
 
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,12 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolder> {
     @Override
     public int getItemCount() {
         return events.size();
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
     }
 
     public void setEvents(List<Event> events) {
