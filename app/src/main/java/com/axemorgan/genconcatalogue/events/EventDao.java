@@ -6,11 +6,17 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.Single;
+
 @Dao
 public interface EventDao {
 
     @Query("SELECT * FROM event")
-    List<Event> getAll();
+    Flowable<List<Event>> getAll();
+
+    @Query("SELECT * FROM event WHERE id == :oneId")
+    Single<Event> getOne(String oneId);
 
     @Insert
     void put(Event event);

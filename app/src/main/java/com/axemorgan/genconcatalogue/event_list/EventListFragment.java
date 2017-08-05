@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import com.axemorgan.genconcatalogue.CatalogueApplication;
 import com.axemorgan.genconcatalogue.R;
 import com.axemorgan.genconcatalogue.dagger.DaggerEventListComponent;
 import com.axemorgan.genconcatalogue.dagger.EventListModule;
+import com.axemorgan.genconcatalogue.events.Event;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,12 +30,14 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
         return new EventListFragment();
     }
 
+
     @BindView(R.id.event_list_recycler_view)
     RecyclerView recyclerView;
 
     @Inject
     EventListContract.Presenter presenter;
 
+    private EventsAdapter adapter;
     private Unbinder unbinder;
 
 
@@ -47,13 +53,14 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        adapter = new EventsAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setAdapter(null);
+        recyclerView.setAdapter(adapter);
 
         DaggerEventListComponent.builder()
                 .appComponent(CatalogueApplication.get(this.getContext()).getComponent())
                 .eventListModule(new EventListModule())
-                .build();
+                .build().inject(this);
         presenter.attachView(this);
     }
 
@@ -64,7 +71,8 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
     }
 
     @Override
-    public void showEvents() {
-        //TODO
+    public void showEvents(List<Event> events) {
+        adapter.setEvents(events);
+        Log.i("PRESENTER", "" + events.size());
     }
 }
