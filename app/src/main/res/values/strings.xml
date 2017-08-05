@@ -4,4 +4,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="menu_update_events">Update Event List</string>
+    <string name="events_updating_loading_message">Checking for updated events...</string>
 </resources>
