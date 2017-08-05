@@ -2,6 +2,8 @@ package com.axemorgan.genconcatalogue.dagger;
 
 import android.content.Context;
 
+import com.axemorgan.genconcatalogue.events.EventDao;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -10,4 +12,6 @@ import dagger.Component;
 @Component(modules = AppModule.class)
 public interface AppComponent {
     Context getContext();
+
+    EventDao getEventDao();
 }

@@ -1,7 +1,6 @@
 package com.axemorgan.genconcatalogue.events;
 
 import android.app.IntentService;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -9,7 +8,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.axemorgan.genconcatalogue.CatalogueApplication;
-import com.axemorgan.genconcatalogue.EventDatabase;
 import com.axemorgan.genconcatalogue.dagger.DaggerNetworkComponent;
 import com.axemorgan.genconcatalogue.dagger.NetworkModule;
 
@@ -62,8 +60,8 @@ public class EventUpdateService extends IntentService {
 
     @Inject
     Retrofit retrofit;
-
-    private EventDao eventDao;
+    @Inject
+    EventDao eventDao;
 
     public EventUpdateService() {
         super("Event Update Service");
@@ -77,10 +75,6 @@ public class EventUpdateService extends IntentService {
                 .appComponent(CatalogueApplication.get(this.getApplicationContext()).getComponent())
                 .networkModule(new NetworkModule())
                 .build().inject(this);
-
-        EventDatabase db = Room.databaseBuilder(getApplicationContext(),
-                EventDatabase.class, "events").build();
-        eventDao = db.eventDao();
     }
 
     @Override

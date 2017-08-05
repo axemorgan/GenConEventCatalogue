@@ -1,6 +1,10 @@
 package com.axemorgan.genconcatalogue.dagger;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
+
+import com.axemorgan.genconcatalogue.EventDatabase;
+import com.axemorgan.genconcatalogue.events.EventDao;
 
 import javax.inject.Singleton;
 
@@ -23,5 +27,15 @@ public class AppModule {
         return appContext;
     }
 
+    @Singleton
+    @Provides
+    EventDatabase provideAppDatabase(Context context) {
+        return Room.databaseBuilder(context, EventDatabase.class, "events").build();
+    }
 
+    @Singleton
+    @Provides
+    EventDao provideEventDao(EventDatabase database) {
+        return database.eventDao();
+    }
 }
