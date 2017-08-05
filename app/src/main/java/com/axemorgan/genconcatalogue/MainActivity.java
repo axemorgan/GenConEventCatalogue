@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.axemorgan.genconcatalogue.events.EventUpdateBroadcastReceiver;
 import com.axemorgan.genconcatalogue.events.EventUpdateService;
@@ -18,14 +17,16 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements EventUpdateBroadcastReceiver.Listener {
 
-    @BindView(R.id.message)
-    TextView mTextMessage;
+    private static final String TAG_EVENT_LIST = "EVENT_LIST";
+
     @BindView(R.id.loading_bottom_sheet)
     View bottomSheet;
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
 
+    private BottomSheetBehavior bottomSheetBehavior;
     private EventUpdateBroadcastReceiver receiver;
+    private EventListFragment eventListFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -34,20 +35,20 @@ public class MainActivity extends AppCompatActivity implements EventUpdateBroadc
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    showListFragment();
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    getSupportFragmentManager().popBackStack();
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    getSupportFragmentManager().popBackStack();
                     return true;
             }
             return false;
         }
 
     };
-    private BottomSheetBehavior bottomSheetBehavior;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,5 +100,16 @@ public class MainActivity extends AppCompatActivity implements EventUpdateBroadc
     @Override
     public void onUpdateFinished() {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    private void showListFragment() {
+        if (eventListFragment == null) {
+            eventListFragment = EventListFragment.create();
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, eventListFragment, "EVENT_LIST")
+                .addToBackStack(null)
+                .commit();
     }
 }
