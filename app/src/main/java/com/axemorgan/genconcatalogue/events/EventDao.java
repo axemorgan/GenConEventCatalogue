@@ -2,6 +2,7 @@ package com.axemorgan.genconcatalogue.events;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import java.util.List;
@@ -18,6 +19,6 @@ public interface EventDao {
     @Query("SELECT * FROM event WHERE id == :oneId")
     Single<Event> getOne(String oneId);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void put(Event event);
 }
