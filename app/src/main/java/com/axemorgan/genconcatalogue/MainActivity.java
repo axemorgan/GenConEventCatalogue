@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.axemorgan.genconcatalogue.event_list.EventListFragment;
 import com.axemorgan.genconcatalogue.events.EventUpdateBroadcastReceiver;
 import com.axemorgan.genconcatalogue.events.EventUpdateService;
 
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements EventUpdateBroadc
         }
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, eventListFragment, "EVENT_LIST")
+                .replace(R.id.fragment_container, eventListFragment, TAG_EVENT_LIST)
                 .addToBackStack(null)
                 .commit();
     }

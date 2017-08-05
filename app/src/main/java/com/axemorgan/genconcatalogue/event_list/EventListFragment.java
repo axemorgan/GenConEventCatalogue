@@ -1,4 +1,4 @@
-package com.axemorgan.genconcatalogue;
+package com.axemorgan.genconcatalogue.event_list;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.axemorgan.genconcatalogue.CatalogueApplication;
+import com.axemorgan.genconcatalogue.R;
+import com.axemorgan.genconcatalogue.dagger.DaggerEventListComponent;
+import com.axemorgan.genconcatalogue.dagger.EventListModule;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class EventListFragment extends Fragment {
+public class EventListFragment extends Fragment implements EventListContract.View {
 
     public static EventListFragment create() {
         return new EventListFragment();
@@ -22,7 +29,11 @@ public class EventListFragment extends Fragment {
     @BindView(R.id.event_list_recycler_view)
     RecyclerView recyclerView;
 
+    @Inject
+    EventListContract.Presenter presenter;
+
     private Unbinder unbinder;
+
 
     @Nullable
     @Override
@@ -35,13 +46,25 @@ public class EventListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(null);
+
+        DaggerEventListComponent.builder()
+                .appComponent(CatalogueApplication.get(this.getContext()).getComponent())
+                .eventListModule(new EventListModule())
+                .build();
+        presenter.attachView(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void showEvents() {
+        //TODO
     }
 }
