@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements EventUpdateBroadc
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        if(savedInstanceState == null) {
+            this.showListFragment();
+        }
+
         receiver = new EventUpdateBroadcastReceiver(this);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
