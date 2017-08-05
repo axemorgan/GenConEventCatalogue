@@ -1,6 +1,7 @@
 package com.axemorgan.genconcatalogue.events;
 
 import android.app.IntentService;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.axemorgan.genconcatalogue.CatalogueApplication;
+import com.axemorgan.genconcatalogue.EventDatabase;
 import com.axemorgan.genconcatalogue.dagger.DaggerNetworkComponent;
 import com.axemorgan.genconcatalogue.dagger.NetworkModule;
 
@@ -58,9 +60,10 @@ public class EventUpdateService extends IntentService {
                 setAction(ACTION_UPDATE_EVENTS);
     }
 
-
     @Inject
     Retrofit retrofit;
+
+    private EventDao eventDao;
 
     public EventUpdateService() {
         super("Event Update Service");
@@ -74,6 +77,10 @@ public class EventUpdateService extends IntentService {
                 .appComponent(CatalogueApplication.get(this.getApplicationContext()).getComponent())
                 .networkModule(new NetworkModule())
                 .build().inject(this);
+
+        EventDatabase db = Room.databaseBuilder(getApplicationContext(),
+                EventDatabase.class, "events").build();
+        eventDao = db.eventDao();
     }
 
     @Override
@@ -135,34 +142,44 @@ public class EventUpdateService extends IntentService {
         } catch (SAXException e) {
             e.printStackTrace();
         }
-        // Parse into model objects
 
         // Persist into database
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_UPDATE_EVENTS_FINISHED));
     }
 
-    private static class MyContentHandler implements SheetContentsHandler {
+    private class MyContentHandler implements SheetContentsHandler {
 
+        String id;
 
         @Override
         public void startRow(int i) {
-
+            id = null;
         }
 
         @Override
         public void endRow(int i) {
-
+            Event event = new Event(id);
+            eventDao.put(event);
+            Log.v("PROCESS", "Inserted " + event);
         }
 
         @Override
-        public void cell(String s, String s1, XSSFComment xssfComment) {
-            Log.i("PROCESS", "Cell " + s + "," + s1);
+        public void cell(String cellIdentifier, String s1, XSSFComment xssfComment) {
+            if (isIdColumn(cellIdentifier)) {
+                id = s1;
+            } else {
+                Log.v("PROCESS", "Cell " + cellIdentifier + ": " + s1);
+            }
         }
 
         @Override
         public void headerFooter(String s, boolean b, String s1) {
 
+        }
+
+        private boolean isIdColumn(String s) {
+            return s.matches("^A\\d+");
         }
     }
 
