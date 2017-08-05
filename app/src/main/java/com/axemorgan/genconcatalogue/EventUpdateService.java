@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.axemorgan.genconcatalogue.dagger.DaggerNetworkComponent;
+import com.axemorgan.genconcatalogue.dagger.NetworkModule;
+
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -31,32 +34,47 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.inject.Inject;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class EventUpdateService extends IntentService {
 
     private static final String ACTION_UPDATE_EVENTS = "action_update_events";
 
-    public EventUpdateService() {
-        super("Event Update Service");
-    }
-
     public static Intent getIntent(Context context) {
         return new Intent(context, EventUpdateService.class).
                 setAction(ACTION_UPDATE_EVENTS);
     }
 
+
+    @Inject
+    Retrofit retrofit;
+
+    public EventUpdateService() {
+        super("Event Update Service");
+
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        DaggerNetworkComponent.builder()
+                .appComponent(CatalogueApplication.get(this.getApplicationContext()).getComponent())
+                .networkModule(new NetworkModule())
+                .build().inject(this);
+    }
+
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         try {
-            EventListClient eventListClient = ((CatalogueApplication)
-                    this.getApplication()).getRetrofit().create(EventListClient.class);
+            EventListClient eventListClient = retrofit.create(EventListClient.class);
             Response<ResponseBody> response = eventListClient.getEventList().execute();
             if (response.isSuccessful()) {
                 if (this.writeResponseBodyToDisk(response.body())) {

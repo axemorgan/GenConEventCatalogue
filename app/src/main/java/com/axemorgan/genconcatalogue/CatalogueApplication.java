@@ -1,15 +1,21 @@
 package com.axemorgan.genconcatalogue;
 
 import android.app.Application;
+import android.content.Context;
 
-import com.readystatesoftware.chuck.ChuckInterceptor;
-
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
+import com.axemorgan.genconcatalogue.dagger.AppComponent;
+import com.axemorgan.genconcatalogue.dagger.AppModule;
+import com.axemorgan.genconcatalogue.dagger.DaggerAppComponent;
 
 public class CatalogueApplication extends Application {
 
-    private Retrofit retrofit;
+    public static CatalogueApplication get(Context context) {
+        return (CatalogueApplication) context.getApplicationContext();
+    }
+
+
+    private AppComponent appComponent;
+
 
     @Override
     public void onCreate() {
@@ -17,18 +23,15 @@ public class CatalogueApplication extends Application {
         System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory", "com.fasterxml.aalto.stax.InputFactoryImpl");
         System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
         System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
+
+
+        appComponent = DaggerAppComponent
+                .builder()
+                .appModule(new AppModule(this))
+                .build();
     }
 
-    public Retrofit getRetrofit() {
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(EventListClient.BASE_URL)
-                    .client(new OkHttpClient.Builder()
-                            .addInterceptor(new ChuckInterceptor(this))
-                            .build())
-                    .build();
-        }
-
-        return retrofit;
+    public AppComponent getComponent() {
+        return appComponent;
     }
 }
