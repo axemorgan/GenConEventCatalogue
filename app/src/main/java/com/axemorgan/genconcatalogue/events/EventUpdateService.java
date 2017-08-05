@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.axemorgan.genconcatalogue.CatalogueApplication;
@@ -49,6 +50,9 @@ public class EventUpdateService extends IntentService {
 
     private static final String ACTION_UPDATE_EVENTS = "action_update_events";
 
+    static final String BROADCAST_UPDATE_EVENTS_STARTED = "BROADCAST_EVENT_UPDATES_STARTED";
+    static final String BROADCAST_UPDATE_EVENTS_FINISHED = "BROADCAST_EVENT_UPDATES_FINISHED";
+
     public static Intent getIntent(Context context) {
         return new Intent(context, EventUpdateService.class).
                 setAction(ACTION_UPDATE_EVENTS);
@@ -74,6 +78,8 @@ public class EventUpdateService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_UPDATE_EVENTS_STARTED));
+
         try {
             EventListClient eventListClient = retrofit.create(EventListClient.class);
             Response<ResponseBody> response = eventListClient.getEventList().execute();
@@ -132,6 +138,8 @@ public class EventUpdateService extends IntentService {
         // Parse into model objects
 
         // Persist into database
+
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_UPDATE_EVENTS_FINISHED));
     }
 
     private static class MyContentHandler implements SheetContentsHandler {
