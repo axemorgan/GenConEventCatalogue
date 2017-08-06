@@ -8,6 +8,8 @@ import com.axemorgan.genconcatalogue.dagger.AppModule;
 import com.axemorgan.genconcatalogue.dagger.DaggerAppComponent;
 import com.facebook.stetho.Stetho;
 
+import timber.log.Timber;
+
 public class CatalogueApplication extends Application {
 
     public static CatalogueApplication get(Context context) {
@@ -25,6 +27,7 @@ public class CatalogueApplication extends Application {
         System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
         System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
 
+        Timber.plant(new Timber.DebugTree());
 
         appComponent = DaggerAppComponent
                 .builder()

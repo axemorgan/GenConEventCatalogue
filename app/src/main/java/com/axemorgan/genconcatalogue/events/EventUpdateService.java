@@ -5,13 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.axemorgan.genconcatalogue.CatalogueApplication;
 import com.axemorgan.genconcatalogue.dagger.DaggerNetworkComponent;
 import com.axemorgan.genconcatalogue.dagger.NetworkModule;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -44,6 +42,7 @@ import javax.xml.parsers.SAXParserFactory;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import timber.log.Timber;
 
 
 public class EventUpdateService extends IntentService {
@@ -79,24 +78,28 @@ public class EventUpdateService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        Timber.i("Event Update Service started");
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_UPDATE_EVENTS_STARTED));
 
+
+        Timber.i("Downloading event list file...");
         try {
             EventListClient eventListClient = retrofit.create(EventListClient.class);
             Response<ResponseBody> response = eventListClient.getEventList().execute();
             if (response.isSuccessful()) {
                 if (this.writeResponseBodyToDisk(response.body())) {
-                    Log.i("EventUpdateService", "Successfully wrote to file");
+                    Timber.i("Event list file saved");
                 } else {
-                    Log.e("EventUpdateService", "Failed to write to file");
+                    Timber.e("Failed to download events file: %s",
+                            response.errorBody() == null ? "No error body" : response.errorBody().string());
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Timber.e(e, "Failed to download event list file");
         }
         try {
 
-
+            Timber.i("Parsing event list file");
             OPCPackage pkg = OPCPackage.open(this.getEventsFile());
             XSSFReader r = new XSSFReader(pkg);
             SharedStringsTable sst = r.getSharedStringsTable();
@@ -124,46 +127,171 @@ public class EventUpdateService extends IntentService {
                 stream.close();
                 ++index;
             }
-
-
-            Log.i("PROCESS", "Workbook loaded");
-
-
-        } catch (IOException | InvalidFormatException e) {
-            e.printStackTrace();
-        } catch (OpenXML4JException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
+        } catch (IOException | OpenXML4JException | SAXException e) {
+            Timber.e(e);
         }
-
-        // Persist into database
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_UPDATE_EVENTS_FINISHED));
     }
 
     private class MyContentHandler implements SheetContentsHandler {
 
-        String id;
+        EventBuilder builder;
 
         @Override
         public void startRow(int i) {
-            id = null;
+            builder = new EventBuilder();
         }
 
         @Override
         public void endRow(int i) {
-            Event event = new Event(id);
+            Event event = builder.create();
             eventDao.put(event);
-            Log.v("PROCESS", "Inserted " + event);
         }
 
         @Override
-        public void cell(String cellIdentifier, String s1, XSSFComment xssfComment) {
-            if (isIdColumn(cellIdentifier)) {
-                id = s1;
-            } else {
-                Log.v("PROCESS", "Cell " + cellIdentifier + ": " + s1);
+        public void cell(String cellIdentifier, String cellText, XSSFComment xssfComment) {
+            switch (getColumnIdentifier(cellIdentifier)) {
+                case "A": {
+                    builder.setId(cellText);
+                    break;
+                }
+                case "B": {
+                    builder.setGroup(cellText);
+                    break;
+                }
+                case "C": {
+                    builder.setTitle(cellText);
+                    break;
+                }
+                case "D": {
+                    builder.setShortDescription(cellText);
+                    break;
+                }
+                case "E": {
+                    builder.setLongDescription(cellText);
+                    break;
+                }
+                case "F": {
+                    builder.setEventType(cellText);
+                    break;
+                }
+                case "G": {
+                    builder.setGameSystem(cellText);
+                    break;
+                }
+                case "H": {
+                    builder.setRulesEdition(cellText);
+                    break;
+                }
+                case "I": {
+                    try {
+                        builder.setMinimumPlayers(Integer.parseInt(cellText));
+                    } catch (NumberFormatException e) {
+                        Timber.w("Unable to parse a number from " + cellText + " for min number of players");
+                    }
+                    break;
+                }
+                case "J": {
+                    try {
+                        builder.setMaximumPlayers(Integer.parseInt(cellText));
+                    } catch (NumberFormatException e) {
+                        Timber.w("Unable to parse a number from " + cellText + " for max number of players");
+                    }
+                    break;
+                }
+                case "K": {
+                    builder.setAgeRequired(cellText);
+                    break;
+                }
+                case "L": {
+                    builder.setExperienceRequired(cellText);
+                    break;
+                }
+                case "M": {
+                    builder.setMaterialsProvided(cellText.equalsIgnoreCase("yes"));
+                    break;
+                }
+                case "N": {
+                    builder.setStartDate(cellText);
+                    break;
+                }
+                case "O": {
+                    try {
+                        builder.setDuration(Integer.parseInt(cellText));
+                    } catch (NumberFormatException e) {
+                        Timber.w("Unable to parse a number from %s for duration", cellText);
+                    }
+                    break;
+                }
+                case "P": {
+                    builder.setEndDate(cellText);
+                    break;
+                }
+                case "Q": {
+                    builder.setGmNames(cellText);
+                    break;
+                }
+                case "R": {
+                    builder.setWebsite(cellText);
+                    break;
+                }
+                case "S": {
+                    builder.setEmail(cellText);
+                    break;
+                }
+                case "T": {
+                    builder.setIsTournament(cellText.equalsIgnoreCase("yes"));
+                    break;
+                }
+                case "U": {
+                    try {
+                        builder.setRoundNumber(Integer.parseInt(cellText));
+                    } catch (NumberFormatException e) {
+                        Timber.w("Unable to parse a number from %s for round number", cellText);
+                    }
+                    break;
+                }
+                case "V": {
+                    try {
+                        builder.setTotalRounds(Integer.parseInt(cellText));
+                    } catch (NumberFormatException e) {
+                        Timber.w("Unable to parse a number from %s for total rounds", cellText);
+                    }
+                    break;
+                }
+                case "Y": {
+                    try {
+                        builder.setCost(Integer.parseInt(cellText));
+                    } catch (NumberFormatException e) {
+                        Timber.w("Unable to parse a number from %s for cost", cellText);
+                    }
+                    break;
+                }
+                case "Z": {
+                    builder.setLocation(cellText);
+                    break;
+                }
+                case "AA": {
+                    builder.setRoomName(cellText);
+                    break;
+                }
+                case "AB": {
+                    builder.setTableNumber(cellText);
+                    break;
+                }
+                case "AD": {
+                    try {
+                        builder.setAvailableTickets(Integer.parseInt(cellText));
+                    } catch (NumberFormatException e) {
+                        Timber.w("Unable to parse a number from %s for available tickets", cellText);
+                    }
+                    break;
+                }
+                case "AE": {
+                    builder.setLastModified(cellText);
+                    break;
+                }
             }
         }
 
@@ -172,8 +300,18 @@ public class EventUpdateService extends IntentService {
 
         }
 
-        private boolean isIdColumn(String s) {
-            return s.matches("^A\\d+");
+        private String getColumnIdentifier(String columnAndRow) {
+            String columnId = "";
+
+            for (char c : columnAndRow.toCharArray()) {
+                if (Character.isDigit(c)) {
+                    break;
+                } else {
+                    columnId += c;
+                }
+            }
+
+            return columnId;
         }
     }
 

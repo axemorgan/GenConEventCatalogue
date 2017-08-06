@@ -30,7 +30,8 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolder> {
     public void onBindViewHolder(EventHolder holder, int position) {
         Event event = events.get(position);
 
-        holder.name.setText(event.getId());
+        holder.name.setText(event.getTitle());
+        holder.group.setText(event.getGroup());
     }
 
 
@@ -55,6 +56,8 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolder> {
 
         @BindView(R.id.event_name)
         TextView name;
+        @BindView(R.id.event_group)
+        TextView group;
 
         EventHolder(View itemView) {
             super(itemView);
