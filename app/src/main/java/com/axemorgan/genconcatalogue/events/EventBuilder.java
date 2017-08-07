@@ -1,5 +1,7 @@
 package com.axemorgan.genconcatalogue.events;
 
+import org.threeten.bp.ZonedDateTime;
+
 public class EventBuilder {
     private String id;
     private String group;
@@ -14,9 +16,9 @@ public class EventBuilder {
     private String ageRequired;
     private String experienceRequired;
     private boolean materialsProvided;
-    private String startDate;
-    private int duration;
-    private String endDate;
+    private ZonedDateTime startDate;
+    private double duration;
+    private ZonedDateTime endDate;
     private String gmNames;
     private String website;
     private String email;
@@ -95,17 +97,17 @@ public class EventBuilder {
         return this;
     }
 
-    public EventBuilder setStartDate(String startDate) {
+    public EventBuilder setStartDate(ZonedDateTime startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public EventBuilder setDuration(int duration) {
+    public EventBuilder setDuration(double duration) {
         this.duration = duration;
         return this;
     }
 
-    public EventBuilder setEndDate(String endDate) {
+    public EventBuilder setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
         return this;
     }

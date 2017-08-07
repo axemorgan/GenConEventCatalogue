@@ -3,7 +3,7 @@ package com.axemorgan.genconcatalogue.dagger;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
-import com.axemorgan.genconcatalogue.EventDatabase;
+import com.axemorgan.genconcatalogue.events.EventDatabase;
 import com.axemorgan.genconcatalogue.events.EventDao;
 
 import javax.inject.Singleton;

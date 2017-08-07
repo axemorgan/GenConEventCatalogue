@@ -5,4 +5,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="menu_update_events">Update Event List</string>
     <string name="events_updating_loading_message">Checking for updated events...</string>
+    <string name="event_list_item_available_tickets">Available tickets: %d</string>
 </resources>

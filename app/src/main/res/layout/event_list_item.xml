@@ -2,20 +2,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+    <TextView
+        android:id="@+id/event_time"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:gravity="end"
+        tools:text="Thur 9:00am-10:00am"/>
 
     <TextView
         android:id="@+id/event_name"
+        style="@style/TextAppearance.AppCompat.Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Title"/>
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/event_time"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="Death Star II: Star Wars Mass Battle"/>
 
     <TextView
-        android:id="@+id/event_group"
+        android:id="@+id/event_description"
+        style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/event_name"
-        tools:text="Group"/>
+        android:maxLines="2"
+        tools:text="Join Lando in leading the assault or help the Empire destroy them and salvage the
+    loss of the Emperor."/>
 
+    <TextView
+        android:id="@+id/event_ticket_count"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/event_description"
+        android:gravity="end"
+        tools:text="Available tickets: 10"/>
 
 </RelativeLayout>

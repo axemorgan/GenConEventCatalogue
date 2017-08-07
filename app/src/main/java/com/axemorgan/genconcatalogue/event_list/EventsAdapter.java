@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.axemorgan.genconcatalogue.R;
 import com.axemorgan.genconcatalogue.events.Event;
 
+import org.threeten.bp.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +33,16 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolder> {
         Event event = events.get(position);
 
         holder.name.setText(event.getTitle());
-        holder.group.setText(event.getGroup());
+
+        holder.description.setText(event.getShortDescription());
+
+        if (event.getStartDate() != null && event.getEndDate() != null) {
+            holder.eventTime.setText(
+                    event.getStartDate().format(DateTimeFormatter.ofPattern("E h:mma"))
+                            + "\u2014" + event.getEndDate().format(DateTimeFormatter.ofPattern("h:mma")));
+        }
+
+        holder.ticketCount.setText(holder.itemView.getContext().getString(R.string.event_list_item_available_tickets, event.getAvailableTickets()));
     }
 
 
@@ -56,8 +67,12 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolder> {
 
         @BindView(R.id.event_name)
         TextView name;
-        @BindView(R.id.event_group)
-        TextView group;
+        @BindView(R.id.event_description)
+        TextView description;
+        @BindView(R.id.event_time)
+        TextView eventTime;
+        @BindView(R.id.event_ticket_count)
+        TextView ticketCount;
 
         EventHolder(View itemView) {
             super(itemView);

@@ -4,6 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import org.threeten.bp.ZonedDateTime;
+
 @SuppressWarnings("unused")
 @Entity
 public class Event {
@@ -48,13 +50,13 @@ public class Event {
     private boolean materialsProvided;
 
     @ColumnInfo(name = "start_date")
-    private String startDate;
+    private ZonedDateTime startDate;
 
     @ColumnInfo(name = "duration")
-    private int duration;
+    private double duration;
 
     @ColumnInfo(name = "end_date")
-    private String endDate;
+    private ZonedDateTime endDate;
 
     @ColumnInfo(name = "gm_names")
     private String gmNames;
@@ -95,8 +97,8 @@ public class Event {
 
     public Event(String id, String group, String title, String shortDescription, String longDescription,
                  String eventType, String gameSystem, String rulesEdition, int minimumPlayers, int maximumPlayers,
-                 String ageRequired, String experienceRequired, boolean materialsProvided, String startDate,
-                 int duration, String endDate, String gmNames, String website, String email, boolean isTournament,
+                 String ageRequired, String experienceRequired, boolean materialsProvided, ZonedDateTime startDate,
+                 double duration, ZonedDateTime endDate, String gmNames, String website, String email, boolean isTournament,
                  int roundNumber, int totalRounds, int cost, String location, String roomName, String tableNumber,
                  int availableTickets, String lastModified) {
         this.id = id;
@@ -233,27 +235,27 @@ public class Event {
         this.materialsProvided = materialsProvided;
     }
 
-    public String getStartDate() {
+    public ZonedDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(ZonedDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public int getDuration() {
+    public double getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(double duration) {
         this.duration = duration;
     }
 
-    public String getEndDate() {
+    public ZonedDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
     }
 

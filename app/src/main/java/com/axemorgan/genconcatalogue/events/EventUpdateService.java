@@ -21,6 +21,11 @@ import org.apache.poi.xssf.model.SharedStringsTable;
 import org.apache.poi.xssf.model.StylesTable;
 import org.apache.poi.xssf.usermodel.XSSFComment;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZonedDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.format.DateTimeParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
@@ -39,6 +44,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import hugo.weaving.DebugLog;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -47,14 +53,15 @@ import timber.log.Timber;
 
 public class EventUpdateService extends IntentService {
 
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MM/d/y h:m a");
     private static final String ACTION_UPDATE_EVENTS = "action_update_events";
 
     static final String BROADCAST_UPDATE_EVENTS_STARTED = "BROADCAST_EVENT_UPDATES_STARTED";
     static final String BROADCAST_UPDATE_EVENTS_FINISHED = "BROADCAST_EVENT_UPDATES_FINISHED";
 
     public static Intent getIntent(Context context) {
-        return new Intent(context, EventUpdateService.class).
-                setAction(ACTION_UPDATE_EVENTS);
+        return new Intent(context, EventUpdateService.class)
+                .setAction(ACTION_UPDATE_EVENTS);
     }
 
     @Inject
@@ -81,22 +88,15 @@ public class EventUpdateService extends IntentService {
         Timber.i("Event Update Service started");
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_UPDATE_EVENTS_STARTED));
 
+        this.downloadEventsList();
 
-        Timber.i("Downloading event list file...");
-        try {
-            EventListClient eventListClient = retrofit.create(EventListClient.class);
-            Response<ResponseBody> response = eventListClient.getEventList().execute();
-            if (response.isSuccessful()) {
-                if (this.writeResponseBodyToDisk(response.body())) {
-                    Timber.i("Event list file saved");
-                } else {
-                    Timber.e("Failed to download events file: %s",
-                            response.errorBody() == null ? "No error body" : response.errorBody().string());
-                }
-            }
-        } catch (IOException e) {
-            Timber.e(e, "Failed to download event list file");
-        }
+        this.parseEventsList();
+
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_UPDATE_EVENTS_FINISHED));
+    }
+
+    @DebugLog
+    private void parseEventsList() {
         try {
 
             Timber.i("Parsing event list file");
@@ -130,8 +130,25 @@ public class EventUpdateService extends IntentService {
         } catch (IOException | OpenXML4JException | SAXException e) {
             Timber.e(e);
         }
+    }
 
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_UPDATE_EVENTS_FINISHED));
+    @DebugLog
+    private void downloadEventsList() {
+        Timber.i("Downloading event list file...");
+        try {
+            EventListClient eventListClient = retrofit.create(EventListClient.class);
+            Response<ResponseBody> response = eventListClient.getEventList().execute();
+            if (response.isSuccessful()) {
+                if (this.writeResponseBodyToDisk(response.body())) {
+                    Timber.i("Event list file saved");
+                } else {
+                    Timber.e("Failed to download events file: %s",
+                            response.errorBody() == null ? "No error body" : response.errorBody().string());
+                }
+            }
+        } catch (IOException e) {
+            Timber.e(e, "Failed to download event list file");
+        }
     }
 
     private class MyContentHandler implements SheetContentsHandler {
@@ -213,19 +230,27 @@ public class EventUpdateService extends IntentService {
                     break;
                 }
                 case "N": {
-                    builder.setStartDate(cellText);
+                    try {
+                        builder.setStartDate(ZonedDateTime.of(LocalDateTime.parse(cellText, DATE_TIME_FORMATTER), ZoneId.of("-5")));
+                    } catch (DateTimeParseException e) {
+                        Timber.w(e, "Unable to parse a start date from %s", cellText);
+                    }
                     break;
                 }
                 case "O": {
                     try {
-                        builder.setDuration(Integer.parseInt(cellText));
+                        builder.setDuration(Double.parseDouble(cellText));
                     } catch (NumberFormatException e) {
-                        Timber.w("Unable to parse a number from %s for duration", cellText);
+                        Timber.w("Unable to parse a double from %s for duration", cellText);
                     }
                     break;
                 }
                 case "P": {
-                    builder.setEndDate(cellText);
+                    try {
+                        builder.setEndDate(ZonedDateTime.of(LocalDateTime.parse(cellText, DATE_TIME_FORMATTER), ZoneId.of("-5")));
+                    } catch (DateTimeParseException e) {
+                        Timber.w(e, "Unable to parse an end time from %s", cellText);
+                    }
                     break;
                 }
                 case "Q": {
