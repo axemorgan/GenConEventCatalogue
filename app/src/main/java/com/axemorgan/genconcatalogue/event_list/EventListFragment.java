@@ -14,6 +14,7 @@ import com.axemorgan.genconcatalogue.CatalogueApplication;
 import com.axemorgan.genconcatalogue.R;
 import com.axemorgan.genconcatalogue.dagger.DaggerEventListComponent;
 import com.axemorgan.genconcatalogue.dagger.EventListModule;
+import com.axemorgan.genconcatalogue.event_detail.EventDetailActivity;
 import com.axemorgan.genconcatalogue.events.Event;
 
 import java.util.List;
@@ -24,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class EventListFragment extends Fragment implements EventListContract.View {
+public class EventListFragment extends Fragment implements EventListContract.View, EventsAdapter.Listener {
 
     public static EventListFragment create() {
         return new EventListFragment();
@@ -53,7 +54,7 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new EventsAdapter();
+        adapter = new EventsAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
 
@@ -74,5 +75,10 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
     public void showEvents(List<Event> events) {
         adapter.setEvents(events);
         Log.i("PRESENTER", "" + events.size());
+    }
+
+    @Override
+    public void onEventPressed(Event event) {
+        this.startActivity(EventDetailActivity.forEvent(this.getContext(), event.getId()));
     }
 }

@@ -17,7 +17,7 @@ public interface EventDao {
     Flowable<List<Event>> getAll();
 
     @Query("SELECT * FROM event WHERE id == :oneId")
-    Single<Event> getOne(String oneId);
+    Single<Event> byId(String oneId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void put(Event event);

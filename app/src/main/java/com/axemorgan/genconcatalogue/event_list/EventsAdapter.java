@@ -21,11 +21,30 @@ import butterknife.ButterKnife;
 
 class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolder> {
 
+    interface Listener {
+        void onEventPressed(Event event);
+    }
+
+    private final Listener listener;
     private List<Event> events = Collections.emptyList();
+
+
+    EventsAdapter(Listener listener) {
+        this.listener = listener;
+    }
 
     @Override
     public EventHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new EventHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.event_list_item, parent, false));
+        final EventHolder eventHolder = new EventHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.event_list_item, parent, false));
+        eventHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (eventHolder.getAdapterPosition() != RecyclerView.NO_POSITION) {
+                    listener.onEventPressed(events.get(eventHolder.getAdapterPosition()));
+                }
+            }
+        });
+        return eventHolder;
     }
 
     @Override
