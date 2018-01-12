@@ -59,7 +59,7 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
         recyclerView.setAdapter(adapter);
 
         DaggerEventListComponent.builder()
-                .appComponent(CatalogueApplication.get(this.getContext()).getComponent())
+                .appComponent(CatalogueApplication.get(this.getContext()).getAppComponent())
                 .eventListModule(new EventListModule())
                 .build().inject(this);
         presenter.attachView(this);

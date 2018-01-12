@@ -60,7 +60,7 @@ public class EventDetailActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         DaggerEventListComponent.builder()
-                .appComponent(CatalogueApplication.get(this).getComponent())
+                .appComponent(CatalogueApplication.get(this).getAppComponent())
                 .eventListModule(new EventListModule())
                 .build().inject(this);
 

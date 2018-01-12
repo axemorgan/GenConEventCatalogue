@@ -37,7 +37,7 @@ public class CatalogueApplication extends Application {
         Stetho.initializeWithDefaults(this);
     }
 
-    public AppComponent getComponent() {
+    public AppComponent getAppComponent() {
         return appComponent;
     }
 }
