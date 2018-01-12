@@ -23,8 +23,8 @@ import org.xml.sax.SAXException
 import org.xml.sax.XMLReader
 import org.xml.sax.helpers.DefaultHandler
 import timber.log.Timber
-import java.io.File
 import java.io.IOException
+import java.io.InputStream
 import javax.inject.Inject
 import javax.xml.parsers.ParserConfigurationException
 import javax.xml.parsers.SAXParser
@@ -32,11 +32,11 @@ import javax.xml.parsers.SAXParserFactory
 
 class EventsParser @Inject constructor(private val contentHandler: SheetContentHandler) {
 
-    fun parseEvents(eventsFile: File) {
+    fun parseEvents(fileStream: InputStream) {
         try {
 
             Timber.i("Parsing event list file")
-            val pkg = OPCPackage.open(eventsFile)
+            val pkg = OPCPackage.open(fileStream)
             val r = XSSFReader(pkg)
             val sst = r.sharedStringsTable
             val parser = fetchSheetParser(sst)
@@ -75,7 +75,7 @@ class EventsParser @Inject constructor(private val contentHandler: SheetContentH
     }
 
     @Throws(SAXException::class)
-    private fun fetchSheetParser(sst: SharedStringsTable): XMLReader {
+    private fun fetchSheetParser(sst: SharedStringsTable?): XMLReader {
         //        XMLReader parser =
         //                XMLReaderFactory.createXMLReader(
         //                        "org.apache.xerces.parsers.SAXParser"
@@ -99,7 +99,7 @@ class EventsParser @Inject constructor(private val contentHandler: SheetContentH
     /**
      * See org.xml.sax.helpers.DefaultHandler javadocs
      */
-    private class SheetHandler constructor(private val sst: SharedStringsTable) : DefaultHandler() {
+    private class SheetHandler constructor(private val sst: SharedStringsTable?) : DefaultHandler() {
         private var lastContents: String? = null
         private var nextIsString: Boolean = false
 
@@ -128,7 +128,7 @@ class EventsParser @Inject constructor(private val contentHandler: SheetContentH
             // Do now, as characters() may be called more than once
             if (nextIsString) {
                 val idx = Integer.parseInt(lastContents)
-                lastContents = XSSFRichTextString(sst.getEntryAt(idx)).toString()
+                lastContents = XSSFRichTextString(sst?.getEntryAt(idx)).toString()
                 nextIsString = false
             }
 
@@ -158,7 +158,7 @@ class EventsParser @Inject constructor(private val contentHandler: SheetContentH
             eventDao.put(event)
         }
 
-        override fun cell(cellIdentifier: String, cellText: String, xssfComment: XSSFComment) {
+        override fun cell(cellIdentifier: String, cellText: String, xssfComment: XSSFComment?) {
             when (getColumnIdentifier(cellIdentifier)) {
                 "A" -> {
                     builder.setId(cellText)

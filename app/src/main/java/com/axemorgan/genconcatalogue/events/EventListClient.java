@@ -6,6 +6,6 @@ import retrofit2.http.GET;
 
 public interface EventListClient {
 
-    @GET("/downloads/events.xlsx")
+    @GET("/downloads/events_list_list")
     Call<ResponseBody> getEventList();
 }

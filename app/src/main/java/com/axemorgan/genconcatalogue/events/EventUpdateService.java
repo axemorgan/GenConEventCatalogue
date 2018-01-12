@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.axemorgan.genconcatalogue.CatalogueApplication;
+import com.axemorgan.genconcatalogue.R;
 import com.axemorgan.genconcatalogue.events.service.EventsDownloader;
 import com.axemorgan.genconcatalogue.events.service.EventsParser;
 
@@ -51,9 +52,9 @@ public class EventUpdateService extends IntentService {
         Timber.i("Event Update Service started");
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_UPDATE_EVENTS_STARTED));
 
-        downloader.downloadEvents(this.getNewEventsFile());
+//        downloader.downloadEvents(this.getNewEventsFile());
 
-        parser.parseEvents(this.getEventsFile());
+        parser.parseEvents(this.getResources().openRawResource(R.raw.events));
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_UPDATE_EVENTS_FINISHED));
     }
