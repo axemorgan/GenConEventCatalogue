@@ -32,8 +32,6 @@ public class EventUpdateService extends IntentService {
     }
 
     @Inject
-    EventDao eventDao;
-    @Inject
     EventsDownloader downloader;
     @Inject
     EventsParser parser;
