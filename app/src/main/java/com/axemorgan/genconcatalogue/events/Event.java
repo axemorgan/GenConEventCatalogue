@@ -3,6 +3,7 @@ package com.axemorgan.genconcatalogue.events;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import org.threeten.bp.ZonedDateTime;
 
@@ -10,6 +11,7 @@ import org.threeten.bp.ZonedDateTime;
 @Entity
 public class Event {
 
+    @NonNull
     @PrimaryKey
     private String id;
 
