@@ -44,6 +44,11 @@ public class EventDetailPresenter extends EventDetailContract.Presenter {
                             view.showEventType(event.getEventType());
                             view.showPlayerCount(event.getMinimumPlayers(), event.getMaximumPlayers());
                             view.showLocation(getEventLocationString(event));
+                            view.showAgeRequirement(event.getAgeRequired());
+                            view.showExperienceRequirement(event.getExperienceRequired());
+                            view.showMaterialsProvided(event.getMaterialsProvided());
+                            view.showAvailableTickets("Tickets $" + event.getCost() + " each. "
+                                    + event.getAvailableTickets() + " of " + event.getMaximumPlayers() + " Tickets Available");
 
                             if (event.getGameSystem().isEmpty()) {
                                 view.hideSystem();

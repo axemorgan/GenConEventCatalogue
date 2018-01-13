@@ -10,4 +10,6 @@
     <string name="menu_filter">Filters</string>
     <string name="event_list_no_events_found">Sorry, no events found :(</string>
     <string name="event_detail_player_count">%d—%d Players</string>
+    <string name="event_detail_materials_provided">Materials Provided</string>
+    <string name="event_detail_materials_not_provided">Materials Not Provided</string>
 </resources>

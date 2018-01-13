@@ -48,10 +48,18 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     TextView longDescriptionField;
     @BindView(R.id.event_detail_location)
     TextView locationField;
-    @BindView(R.id.event_details_group_website)
+    @BindView(R.id.event_detail_group_website)
     TextView groupWebsiteField;
-    @BindView(R.id.event_details_contact_email)
+    @BindView(R.id.event_detail_contact_email)
     TextView contactEmailField;
+    @BindView(R.id.event_detail_age_requirement)
+    TextView ageRequirementField;
+    @BindView(R.id.event_detail_experience_requirement)
+    TextView experienceRequirementField;
+    @BindView(R.id.event_detail_materials_provided)
+    TextView materialsProvidedField;
+    @BindView(R.id.event_detail_tickets)
+    TextView ticketsField;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -176,6 +184,30 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     @Override
     public void hideContactEmail() {
         contactEmailField.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showAgeRequirement(String requirement) {
+        ageRequirementField.setText(requirement);
+    }
+
+    @Override
+    public void showExperienceRequirement(String requirement) {
+        experienceRequirementField.setText(requirement);
+    }
+
+    @Override
+    public void showMaterialsProvided(boolean provided) {
+        if (provided) {
+            materialsProvidedField.setText(R.string.event_detail_materials_provided);
+        } else {
+            materialsProvidedField.setText(R.string.event_detail_materials_not_provided);
+        }
+    }
+
+    @Override
+    public void showAvailableTickets(String ticketsText) {
+
     }
 
     @Override

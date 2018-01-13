@@ -38,6 +38,14 @@ public interface EventDetailContract {
 
         void hideContactEmail();
 
+        void showAgeRequirement(String requirement);
+
+        void showExperienceRequirement(String requirement);
+
+        void showMaterialsProvided(boolean provided);
+
+        void showAvailableTickets(String ticketsText);
+
         void launchCalendarIntent(long startTime, long endTime, String title, String location, String description);
 
 
