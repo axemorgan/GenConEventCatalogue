@@ -26,6 +26,10 @@ public interface EventDetailContract {
 
         void hideSystem();
 
+        void showPlayerCount(int min, int max);
+
+        void showLocation(String location);
+
         void launchCalendarIntent(long startTime, long endTime, String title, String location, String description);
 
 

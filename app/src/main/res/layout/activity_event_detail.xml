@@ -68,21 +68,6 @@
             tools:text="Dungeons and Dragons 5th Edition"/>
 
         <TextView
-            android:id="@+id/event_detail_date_time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:drawablePadding="8dp"
-            android:drawableStart="@drawable/ic_event_black_24dp"
-            android:gravity="center_vertical"
-            android:minHeight="48dp"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_detail_system"
-            tools:text="Thur Aug 3, 8:00PM-10:00PM"/>
-
-        <TextView
             android:id="@+id/event_detail_short_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -94,8 +79,50 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_detail_date_time"
+            app:layout_constraintTop_toBottomOf="@+id/event_detail_system"
             tools:text="Look, everyone wants to be like Germany, but do we really have the pure strength of 'will'? Guess again. We need rest. The spirit is willing, but the flesh is spongy and bruised. Meh."/>
+
+        <TextView
+            android:id="@+id/event_detail_date_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_event_black_24dp"
+            android:gravity="center_vertical"
+            android:minHeight="48dp"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_detail_short_description"
+            tools:text="Thur Aug 3, 8:00PM-10:00PM"/>
+
+        <TextView
+            android:id="@+id/event_detail_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_location_on_black_24dp"
+            android:gravity="center_vertical"
+            android:minHeight="48dp"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_detail_date_time"
+            tools:text="ICC 404, Table 42"/>
+
+        <TextView
+            android:id="@+id/event_detail_player_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_detail_location"
+            tools:text="Players: 1-255"/>
 
         <TextView
             android:id="@+id/event_detail_long_description"
@@ -108,7 +135,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_detail_short_description"
+            app:layout_constraintTop_toBottomOf="@+id/event_detail_player_count"
             tools:text="There's no part of that sentence I didn't like! Too much work. Let's burn it and say we dumped it in the sewer. Who's brave enough to fly into something we all keep calling a death sphere? Say what? And remember, don't do anything that affects anything, unless it turns out you were supposed to, in which case, for the love of God, don't not do it!"/>
 
     </android.support.constraint.ConstraintLayout>

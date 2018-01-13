@@ -42,6 +42,8 @@ public class EventDetailPresenter extends EventDetailContract.Presenter {
                             view.showDate(DateFormats.INSTANCE.formatLongDateRange(
                                     event.getStartDate(), event.getEndDate()));
                             view.showEventType(event.getEventType());
+                            view.showPlayerCount(event.getMinimumPlayers(), event.getMaximumPlayers());
+                            view.showLocation(getEventLocationString(event));
 
                             if (event.getGameSystem().isEmpty()) {
                                 view.hideSystem();
@@ -84,7 +86,7 @@ public class EventDetailPresenter extends EventDetailContract.Presenter {
         }
 
         if (!event.getTableNumber().isEmpty()) {
-            location += ", table " + event.getTableNumber();
+            location += ", Table " + event.getTableNumber();
         }
 
         return location;

@@ -40,10 +40,14 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     TextView systemField;
     @BindView(R.id.event_detail_date_time)
     TextView dateField;
+    @BindView(R.id.event_detail_player_count)
+    TextView playerCountField;
     @BindView(R.id.event_detail_short_description)
     TextView shortDescriptionField;
     @BindView(R.id.event_detail_long_description)
     TextView longDescriptionField;
+    @BindView(R.id.event_detail_location)
+    TextView locationField;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -136,6 +140,16 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     @Override
     public void hideSystem() {
         systemField.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showPlayerCount(int min, int max) {
+        playerCountField.setText(getString(R.string.event_detail_player_count, min, max));
+    }
+
+    @Override
+    public void showLocation(String location) {
+        locationField.setText(location);
     }
 
     @Override
