@@ -30,7 +30,57 @@ public class EventListPresenter extends EventListContract.Presenter implements F
     @Override
     public void onViewAttached() {
         searchModel.addObserver(this);
+        this.fetchAllEvents();
+    }
 
+    @Override
+    public void onViewDetached() {
+        searchModel.removeObserver(this);
+    }
+
+    @Override
+    public Unit invoke(final String query) {
+        if (query.isEmpty()) {
+            this.fetchAllEvents();
+        } else {
+            Timber.i("Searching for %s", query);
+            eventDao.search("%" + query + "%")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new DisposableSubscriber<List<Event>>() {
+                        @Override
+                        public void onNext(List<Event> events) {
+                            Timber.i("Found %d events for query %s", events.size(), query);
+                            if (getView() != null) {
+                                if (events.isEmpty()) {
+                                    getViewOrThrow().showNoEventsFound();
+                                } else {
+                                    getViewOrThrow().showEvents(events);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable t) {
+                            Timber.e(t, "Error while searching events");
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            Timber.i("Subscription ended");
+                        }
+                    });
+        }
+
+        return null;
+    }
+
+    @Override
+    void onViewDetails(Event event) {
+        this.getViewOrThrow().navigateToEventDetail(event);
+    }
+
+    private void fetchAllEvents() {
         eventDao.getAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -55,48 +105,5 @@ public class EventListPresenter extends EventListContract.Presenter implements F
                         Timber.i("Subscription completed");
                     }
                 });
-    }
-
-    @Override
-    public void onViewDetached() {
-        searchModel.removeObserver(this);
-    }
-
-    @Override
-    public Unit invoke(final String query) {
-        Timber.i("Searching for %s", query);
-        eventDao.search("%" + query + "%")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSubscriber<List<Event>>() {
-                    @Override
-                    public void onNext(List<Event> events) {
-                        Timber.i("Found %d events for query %s", events.size(), query);
-                        if (getView() != null) {
-                            if (events.isEmpty()) {
-                                getViewOrThrow().showNoEventsFound();
-                            } else {
-                                getViewOrThrow().showEvents(events);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        Timber.e(t, "Error while searching events");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Timber.i("Subscription ended");
-                    }
-                });
-
-        return null;
-    }
-
-    @Override
-    void onViewDetails(Event event) {
-        this.getViewOrThrow().navigateToEventDetail(event);
     }
 }

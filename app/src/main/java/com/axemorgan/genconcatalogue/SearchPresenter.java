@@ -15,4 +15,9 @@ public class SearchPresenter extends SearchActivityContract.Presenter {
     void performSearch() {
         searchModel.setQuery(this.getViewOrThrow().getSearchText());
     }
+
+    @Override
+    void onSearchClosed() {
+        searchModel.setQuery("");
+    }
 }

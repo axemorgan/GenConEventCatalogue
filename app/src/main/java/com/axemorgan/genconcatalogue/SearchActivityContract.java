@@ -12,6 +12,8 @@ public interface SearchActivityContract {
     abstract class Presenter extends AbstractPresenter<View> {
 
         abstract void performSearch();
+
+        abstract void onSearchClosed();
     }
 
 }

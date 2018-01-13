@@ -179,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements SearchActivityCon
     @Override
     public boolean onClose() {
         this.hideSearchBar();
+        presenter.onSearchClosed();
         return true;
     }
 
