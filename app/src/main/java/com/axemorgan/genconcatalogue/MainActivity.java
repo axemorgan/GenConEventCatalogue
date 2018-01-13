@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.axemorgan.genconcatalogue.event_list.EventListFragment;
 import com.axemorgan.genconcatalogue.events.EventUpdateBroadcastReceiver;
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements SearchActivityCon
                 return true;
             }
             case R.id.menu_filter: {
+                Toast.makeText(this, "No filters yet :(", Toast.LENGTH_SHORT).show();
                 return true;
             }
             case R.id.menu_update_events: {

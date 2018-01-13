@@ -6,6 +6,8 @@ import android.content.Context;
 import com.axemorgan.genconcatalogue.SearchActivityContract;
 import com.axemorgan.genconcatalogue.SearchModel;
 import com.axemorgan.genconcatalogue.SearchPresenter;
+import com.axemorgan.genconcatalogue.event_detail.EventDetailContract;
+import com.axemorgan.genconcatalogue.event_detail.EventDetailPresenter;
 import com.axemorgan.genconcatalogue.event_list.EventListContract;
 import com.axemorgan.genconcatalogue.event_list.EventListPresenter;
 import com.axemorgan.genconcatalogue.events.EventDao;
@@ -50,7 +52,12 @@ public class AppModule {
     }
 
     @Provides
-    EventListContract.Presenter providePresenter(SearchModel model, EventDao eventDao) {
+    EventListContract.Presenter provideEventListPresenter(SearchModel model, EventDao eventDao) {
         return new EventListPresenter(model, eventDao);
+    }
+
+    @Provides
+    EventDetailContract.Presenter provideEventDetailPresenter(EventDao eventDao) {
+        return new EventDetailPresenter(eventDao);
     }
 }

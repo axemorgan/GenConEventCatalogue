@@ -141,8 +141,9 @@ public class Event {
         this.id = id;
     }
 
+    @NonNull
     public String getGroup() {
-        return group;
+        return group == null ? "" : group;
     }
 
     public void setGroup(String group) {
@@ -326,7 +327,7 @@ public class Event {
     }
 
     public String getRoomName() {
-        return roomName;
+        return roomName == null ? "" : roomName;
     }
 
     public void setRoomName(String roomName) {
