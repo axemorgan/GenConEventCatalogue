@@ -20,7 +20,15 @@ public interface EventDetailContract {
 
         void showLongDescription(String longDescription);
 
+        void showEventType(String eventType);
+
+        void showSystemAndEdition(String system);
+
+        void hideSystem();
+
         void launchCalendarIntent(long startTime, long endTime, String title, String location, String description);
+
+
     }
 
     abstract class Presenter extends AbstractPresenter<View> {

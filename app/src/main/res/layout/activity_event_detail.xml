@@ -48,6 +48,26 @@
 
 
         <TextView
+            android:id="@+id/event_detail_event_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            tools:text="RPG - Role Playing Game"/>
+
+        <TextView
+            android:id="@+id/event_detail_system"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_detail_event_type"
+            tools:text="Dungeons and Dragons 5th Edition"/>
+
+        <TextView
             android:id="@+id/event_detail_date_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -59,7 +79,7 @@
             android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintTop_toBottomOf="@+id/event_detail_system"
             tools:text="Thur Aug 3, 8:00PM-10:00PM"/>
 
         <TextView

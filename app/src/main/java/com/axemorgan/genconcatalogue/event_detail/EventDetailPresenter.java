@@ -35,16 +35,26 @@ public class EventDetailPresenter extends EventDetailContract.Presenter {
                     public void onSuccess(@NonNull Event event) {
                         EventDetailPresenter.this.event = event;
                         if (getView() != null) {
-                            getViewOrThrow().showEventTitle(event.getTitle());
-                            getViewOrThrow().showLongDescription(event.getLongDescription());
-                            getViewOrThrow().showShortDescription(event.getShortDescription());
-                            getViewOrThrow().showDate(DateFormats.INSTANCE.formatLongDateRange(
+                            EventDetailContract.View view = getViewOrThrow();
+                            view.showEventTitle(event.getTitle());
+                            view.showLongDescription(event.getLongDescription());
+                            view.showShortDescription(event.getShortDescription());
+                            view.showDate(DateFormats.INSTANCE.formatLongDateRange(
                                     event.getStartDate(), event.getEndDate()));
+                            view.showEventType(event.getEventType());
+
+                            if (event.getGameSystem().isEmpty()) {
+                                view.hideSystem();
+                            } else if (event.getRulesEdition().isEmpty()) {
+                                view.showSystemAndEdition(event.getGameSystem());
+                            } else {
+                                view.showSystemAndEdition(event.getGameSystem() + " " + event.getRulesEdition() + " Edition");
+                            }
 
                             if (event.getGroup().isEmpty()) {
-                                getViewOrThrow().hideGroupName();
+                                view.hideGroupName();
                             } else {
-                                getViewOrThrow().showGroupName(event.getGroup());
+                                view.showGroupName(event.getGroup());
                             }
                         }
                     }

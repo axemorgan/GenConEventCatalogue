@@ -34,6 +34,10 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     TextView titleField;
     @BindView(R.id.event_detail_group_name)
     TextView groupNameField;
+    @BindView(R.id.event_detail_event_type)
+    TextView eventTypeField;
+    @BindView(R.id.event_detail_system)
+    TextView systemField;
     @BindView(R.id.event_detail_date_time)
     TextView dateField;
     @BindView(R.id.event_detail_short_description)
@@ -116,6 +120,22 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     @Override
     public void showLongDescription(String longDescription) {
         longDescriptionField.setText(longDescription);
+    }
+
+    @Override
+    public void showEventType(String eventType) {
+        eventTypeField.setText(eventType);
+    }
+
+    @Override
+    public void showSystemAndEdition(String system) {
+        systemField.setVisibility(View.VISIBLE);
+        systemField.setText(system);
+    }
+
+    @Override
+    public void hideSystem() {
+        systemField.setVisibility(View.GONE);
     }
 
     @Override
