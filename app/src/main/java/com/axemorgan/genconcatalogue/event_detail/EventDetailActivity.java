@@ -48,6 +48,10 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     TextView longDescriptionField;
     @BindView(R.id.event_detail_location)
     TextView locationField;
+    @BindView(R.id.event_details_group_website)
+    TextView groupWebsiteField;
+    @BindView(R.id.event_details_contact_email)
+    TextView contactEmailField;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -150,6 +154,28 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     @Override
     public void showLocation(String location) {
         locationField.setText(location);
+    }
+
+    @Override
+    public void showGroupWebsite(String website) {
+        groupWebsiteField.setVisibility(View.VISIBLE);
+        groupWebsiteField.setText(website);
+    }
+
+    @Override
+    public void hideGroupWebsite() {
+        groupWebsiteField.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showContactEmail(String email) {
+        contactEmailField.setVisibility(View.VISIBLE);
+        contactEmailField.setText(email);
+    }
+
+    @Override
+    public void hideContactEmail() {
+        contactEmailField.setVisibility(View.GONE);
     }
 
     @Override

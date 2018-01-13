@@ -30,6 +30,14 @@ public interface EventDetailContract {
 
         void showLocation(String location);
 
+        void showGroupWebsite(String website);
+
+        void hideGroupWebsite();
+
+        void showContactEmail(String email);
+
+        void hideContactEmail();
+
         void launchCalendarIntent(long startTime, long endTime, String title, String location, String description);
 
 

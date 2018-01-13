@@ -122,7 +122,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/event_detail_location"
-            tools:text="Players: 1-255"/>
+            tools:text="1-255 Players"/>
 
         <TextView
             android:id="@+id/event_detail_long_description"
@@ -137,6 +137,32 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/event_detail_player_count"
             tools:text="There's no part of that sentence I didn't like! Too much work. Let's burn it and say we dumped it in the sewer. Who's brave enough to fly into something we all keep calling a death sphere? Say what? And remember, don't do anything that affects anything, unless it turns out you were supposed to, in which case, for the love of God, don't not do it!"/>
+
+        <TextView
+            android:id="@+id/event_details_group_website"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:autoLink="web"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_detail_long_description"
+            tools:text="www.example.com"/>
+
+        <TextView
+            android:id="@+id/event_details_contact_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:autoLink="email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_details_group_website"
+            tools:text="john.doe@example.com"/>
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

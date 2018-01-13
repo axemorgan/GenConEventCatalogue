@@ -58,6 +58,18 @@ public class EventDetailPresenter extends EventDetailContract.Presenter {
                             } else {
                                 view.showGroupName(event.getGroup());
                             }
+
+                            if (event.getWebsite().isEmpty()) {
+                                view.hideGroupWebsite();
+                            } else {
+                                view.showGroupWebsite(event.getWebsite());
+                            }
+
+                            if (event.getEmail().isEmpty()) {
+                                view.hideContactEmail();
+                            } else {
+                                view.showContactEmail(event.getEmail());
+                            }
                         }
                     }
 
