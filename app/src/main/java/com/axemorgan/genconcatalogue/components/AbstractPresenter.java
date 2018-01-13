@@ -17,9 +17,13 @@ public abstract class AbstractPresenter<T> {
         this.onViewDetached();
     }
 
-    protected abstract void onViewAttached();
+    protected void onViewAttached() {
+        // Empty
+    }
 
-    protected abstract void onViewDetached();
+    protected void onViewDetached() {
+        // Empty
+    }
 
     @NonNull
     protected T getViewOrThrow() {

@@ -1,19 +1,18 @@
 package com.axemorgan.genconcatalogue.event_list;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.axemorgan.genconcatalogue.CatalogueApplication;
 import com.axemorgan.genconcatalogue.R;
-import com.axemorgan.genconcatalogue.dagger.DaggerEventListComponent;
-import com.axemorgan.genconcatalogue.dagger.EventListModule;
 import com.axemorgan.genconcatalogue.event_detail.EventDetailActivity;
 import com.axemorgan.genconcatalogue.events.Event;
 
@@ -34,6 +33,8 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
 
     @BindView(R.id.event_list_recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.event_list_empty_view)
+    TextView emptyView;
 
     @Inject
     EventListContract.Presenter presenter;
@@ -44,24 +45,22 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event_list, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         adapter = new EventsAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
 
-        DaggerEventListComponent.builder()
-                .appComponent(CatalogueApplication.get(this.getContext()).getAppComponent())
-                .eventListModule(new EventListModule())
-                .build().inject(this);
+        CatalogueApplication.get(this.getContext()).getAppComponent().inject(this);
+
         presenter.attachView(this);
     }
 
@@ -74,11 +73,24 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
     @Override
     public void showEvents(List<Event> events) {
         adapter.setEvents(events);
-        Log.i("PRESENTER", "" + events.size());
+
+        recyclerView.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showNoEventsFound() {
+        recyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onEventPressed(Event event) {
+        presenter.onViewDetails(event);
+    }
+
+    @Override
+    public void navigateToEventDetail(Event event) {
         this.startActivity(EventDetailActivity.forEvent(this.getContext(), event.getId()));
     }
 }

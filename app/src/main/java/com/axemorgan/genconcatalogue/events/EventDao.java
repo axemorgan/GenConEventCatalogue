@@ -13,10 +13,13 @@ import io.reactivex.Single;
 @Dao
 public interface EventDao {
 
-    @Query("SELECT * FROM event")
+    @Query("SELECT * FROM Event")
     Flowable<List<Event>> getAll();
 
-    @Query("SELECT * FROM event WHERE id == :oneId")
+    @Query("SELECT * FROM Event WHERE title LIKE :query")
+    Flowable<List<Event>> search(String query);
+
+    @Query("SELECT * FROM Event WHERE id == :oneId")
     Single<Event> byId(String oneId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

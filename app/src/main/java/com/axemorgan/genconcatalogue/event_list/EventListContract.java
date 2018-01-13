@@ -8,9 +8,13 @@ import java.util.List;
 public interface EventListContract {
     interface View {
         void showEvents(List<Event> events);
+
+        void showNoEventsFound();
+
+        void navigateToEventDetail(Event event);
     }
 
     abstract class Presenter extends AbstractPresenter<View> {
-
+        abstract void onViewDetails(Event event);
     }
 }

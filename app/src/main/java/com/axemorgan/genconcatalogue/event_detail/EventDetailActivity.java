@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.axemorgan.genconcatalogue.CatalogueApplication;
 import com.axemorgan.genconcatalogue.R;
-import com.axemorgan.genconcatalogue.dagger.DaggerEventListComponent;
-import com.axemorgan.genconcatalogue.dagger.EventListModule;
 import com.axemorgan.genconcatalogue.events.Event;
 import com.axemorgan.genconcatalogue.events.EventDao;
 
@@ -59,10 +57,7 @@ public class EventDetailActivity extends AppCompatActivity {
         ActionBar actionBar = this.getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        DaggerEventListComponent.builder()
-                .appComponent(CatalogueApplication.get(this).getAppComponent())
-                .eventListModule(new EventListModule())
-                .build().inject(this);
+        CatalogueApplication.get(this).getAppComponent().inject(this);
 
         String eventId = this.getIntent().getStringExtra(EXTRA_EVENT_ID);
         Single<Event> eventSingle = eventDao.byId(eventId);

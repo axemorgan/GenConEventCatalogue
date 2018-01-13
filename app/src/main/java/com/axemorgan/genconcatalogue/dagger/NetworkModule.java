@@ -12,7 +12,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
 @Module
-public class NetworkModule {
+class NetworkModule {
 
     private static final String BASE_URL = "http://www.gencon.com";
 

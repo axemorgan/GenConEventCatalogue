@@ -3,8 +3,13 @@ package com.axemorgan.genconcatalogue.dagger;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
-import com.axemorgan.genconcatalogue.events.EventDatabase;
+import com.axemorgan.genconcatalogue.SearchActivityContract;
+import com.axemorgan.genconcatalogue.SearchModel;
+import com.axemorgan.genconcatalogue.SearchPresenter;
+import com.axemorgan.genconcatalogue.event_list.EventListContract;
+import com.axemorgan.genconcatalogue.event_list.EventListPresenter;
 import com.axemorgan.genconcatalogue.events.EventDao;
+import com.axemorgan.genconcatalogue.events.EventDatabase;
 
 import javax.inject.Singleton;
 
@@ -37,5 +42,15 @@ public class AppModule {
     @Provides
     EventDao provideEventDao(EventDatabase database) {
         return database.eventDao();
+    }
+
+    @Provides
+    SearchActivityContract.Presenter provideSearchPresenter(SearchModel model) {
+        return new SearchPresenter(model);
+    }
+
+    @Provides
+    EventListContract.Presenter providePresenter(SearchModel model, EventDao eventDao) {
+        return new EventListPresenter(model, eventDao);
     }
 }

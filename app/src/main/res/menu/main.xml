@@ -2,6 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/menu_search"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_filter"
+        android:icon="@drawable/ic_filter_list_black_24dp"
+        android:title="@string/menu_filter"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/menu_update_events"
         android:title="@string/menu_update_events"
         app:showAsAction="never"/>

@@ -173,6 +173,10 @@ public class EventBuilder {
     }
 
     public Event create() {
-        return new Event(id, group, title, shortDescription, longDescription, eventType, gameSystem, rulesEdition, minimumPlayers, maximumPlayers, ageRequired, experienceRequired, materialsProvided, startDate, duration, endDate, gmNames, website, email, isTournament, roundNumber, totalRounds, cost, location, roomName, tableNumber, availableTickets, lastModified);
+        return new Event(id, group, title, shortDescription, longDescription, eventType, gameSystem,
+                rulesEdition, minimumPlayers, maximumPlayers, ageRequired, experienceRequired,
+                materialsProvided, startDate, duration, endDate, gmNames, website, email,
+                isTournament, roundNumber, totalRounds, cost, location, roomName, tableNumber,
+                availableTickets, lastModified);
     }
 }
