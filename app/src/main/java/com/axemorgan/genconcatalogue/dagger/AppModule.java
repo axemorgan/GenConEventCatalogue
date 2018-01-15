@@ -12,6 +12,8 @@ import com.axemorgan.genconcatalogue.event_list.EventListContract;
 import com.axemorgan.genconcatalogue.event_list.EventListPresenter;
 import com.axemorgan.genconcatalogue.events.EventDao;
 import com.axemorgan.genconcatalogue.events.EventDatabase;
+import com.axemorgan.genconcatalogue.filters.FilterContract;
+import com.axemorgan.genconcatalogue.filters.FilterPresenter;
 
 import javax.inject.Singleton;
 
@@ -59,5 +61,10 @@ public class AppModule {
     @Provides
     EventDetailContract.Presenter provideEventDetailPresenter(EventDao eventDao) {
         return new EventDetailPresenter(eventDao);
+    }
+
+    @Provides
+    FilterContract.Presenter provideFilterPresenter(EventDao eventDao, SearchModel searchModel) {
+        return new FilterPresenter(eventDao, searchModel);
     }
 }

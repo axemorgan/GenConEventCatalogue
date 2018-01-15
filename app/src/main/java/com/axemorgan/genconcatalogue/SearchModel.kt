@@ -1,5 +1,6 @@
 package com.axemorgan.genconcatalogue
 
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.properties.Delegates
@@ -18,7 +19,11 @@ class SearchModel @Inject constructor() {
     }
 
     var query: String by Delegates.observable("") { _, oldValue, newValue ->
-        observers?.forEach { it(newValue) }
+        observers.forEach { it(newValue) }
+    }
+
+    var eventTypeFilter: String by Delegates.observable("") { _, oldValue, newValue ->
+        Timber.i("Applying event type filter %s", newValue)
     }
 
 }

@@ -7,6 +7,7 @@ import com.axemorgan.genconcatalogue.event_detail.EventDetailActivity;
 import com.axemorgan.genconcatalogue.event_list.EventListFragment;
 import com.axemorgan.genconcatalogue.events.EventDao;
 import com.axemorgan.genconcatalogue.events.EventUpdateService;
+import com.axemorgan.genconcatalogue.filters.FilterFragment;
 
 import javax.inject.Singleton;
 
@@ -26,4 +27,6 @@ public interface AppComponent {
     void inject(EventListFragment fragment);
 
     void inject(EventDetailActivity activity);
+
+    void inject(FilterFragment filterFragment);
 }

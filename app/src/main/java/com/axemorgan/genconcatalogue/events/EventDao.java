@@ -22,6 +22,9 @@ public interface EventDao {
     @Query("SELECT * FROM Event WHERE id == :oneId")
     Single<Event> byId(String oneId);
 
+    @Query("SELECT DISTINCT event_type FROM Event")
+    Flowable<List<String>> getAllEventTypes();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void put(Event event);
 }
