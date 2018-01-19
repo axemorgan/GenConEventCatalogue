@@ -60,10 +60,10 @@ public class FilterPresenter extends FilterContract.Presenter {
 
     private List<SpinnerItem<String>> getEventTypeSpinnerItems(List<String> eventTypes) {
         ArrayList<SpinnerItem<String>> types = new ArrayList<>(eventTypes.size() + 1);
+        types.add(new SpinnerItem<>("All Event Types", NO_EVENT_TYPE_FILTER));
         for (String eventType : eventTypes) {
             types.add(new SpinnerItem<>(eventType, eventType));
         }
-        types.add(new SpinnerItem<>("All Event Types", NO_EVENT_TYPE_FILTER));
         return types;
     }
 }

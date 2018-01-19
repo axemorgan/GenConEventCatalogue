@@ -335,7 +335,7 @@ public class Event {
     }
 
     public String getTableNumber() {
-        return tableNumber;
+        return tableNumber == null ? "" : tableNumber;
     }
 
     public void setTableNumber(String tableNumber) {

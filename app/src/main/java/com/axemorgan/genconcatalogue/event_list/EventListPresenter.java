@@ -3,6 +3,7 @@ package com.axemorgan.genconcatalogue.event_list;
 import com.axemorgan.genconcatalogue.SearchModel;
 import com.axemorgan.genconcatalogue.events.Event;
 import com.axemorgan.genconcatalogue.events.EventDao;
+import com.axemorgan.genconcatalogue.events.Search;
 
 import java.util.List;
 
@@ -19,11 +20,13 @@ public class EventListPresenter extends EventListContract.Presenter implements F
 
     private final SearchModel searchModel;
     private final EventDao eventDao;
+    private final Search search;
 
     @Inject
-    public EventListPresenter(SearchModel searchModel, EventDao eventDao) {
+    public EventListPresenter(SearchModel searchModel, EventDao eventDao, Search search) {
         this.searchModel = searchModel;
         this.eventDao = eventDao;
+        this.search = search;
     }
 
 
@@ -41,61 +44,32 @@ public class EventListPresenter extends EventListContract.Presenter implements F
     @Override
     public Unit invoke(final SearchModel searchModel) {
         final String query = searchModel.getQuery();
-        if (searchModel.getEventTypeFilter().isEmpty()) {
-            Timber.i("Searching for %s", query);
-            eventDao.search("%" + query + "%")
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableSubscriber<List<Event>>() {
-                        @Override
-                        public void onNext(List<Event> events) {
-                            Timber.i("Found %d events for query %s", events.size(), query);
-                            if (getView() != null) {
-                                if (events.isEmpty()) {
-                                    getViewOrThrow().showNoEventsFound();
-                                } else {
-                                    getViewOrThrow().showEvents(events);
-                                }
+        search.using(searchModel)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSubscriber<List<Event>>() {
+                    @Override
+                    public void onNext(List<Event> events) {
+                        Timber.i("Found %d events for query %s", events.size(), query);
+                        if (getView() != null) {
+                            if (events.isEmpty()) {
+                                getViewOrThrow().showNoEventsFound();
+                            } else {
+                                getViewOrThrow().showEvents(events);
                             }
                         }
+                    }
 
-                        @Override
-                        public void onError(Throwable t) {
-                            Timber.e(t, "Error while searching events");
-                        }
+                    @Override
+                    public void onError(Throwable t) {
+                        Timber.e(t, "Error while searching events");
+                    }
 
-                        @Override
-                        public void onComplete() {
-                            Timber.i("Subscription ended");
-                        }
-                    });
-        } else {
-            eventDao.searchWithEventType("%" + searchModel.getQuery() + "%", searchModel.getEventTypeFilter())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableSubscriber<List<Event>>() {
-                        @Override
-                        public void onNext(List<Event> events) {
-                            if (getView() != null) {
-                                if (events.isEmpty()) {
-                                    getViewOrThrow().showNoEventsFound();
-                                } else {
-                                    getViewOrThrow().showEvents(events);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable t) {
-                            Timber.e(t, "Error while searching with event type filter");
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            Timber.i("Subscription completed");
-                        }
-                    });
-        }
+                    @Override
+                    public void onComplete() {
+                        Timber.i("Subscription ended");
+                    }
+                });
 
         return null;
     }
