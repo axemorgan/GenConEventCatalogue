@@ -5,14 +5,18 @@
     <string name="title_notifications">Notifications</string>
     <string name="menu_update_events">Update Event List</string>
     <string name="events_updating_loading_message">Checking for updated events…</string>
-    <string name="event_list_item_available_tickets">Available tickets: %d</string>
     <string name="menu_search">Search</string>
     <string name="menu_filter">Filters</string>
-    <string name="event_list_no_events_found">Sorry, no events found :(</string>
+
     <string name="event_detail_player_count">%d—%d Players</string>
     <string name="event_detail_materials_provided">Materials Provided</string>
     <string name="event_detail_materials_not_provided">Materials Not Provided</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="event_list_item_available_tickets">Available tickets: %d</string>
+    <string name="event_list_no_events_found">Sorry, no events found :(</string>
+
+    <plurals name="event_list_search_result_count">
+        <item quantity="one">Found %s event</item>
+        <item quantity="other">Found %s events</item>
+    </plurals>
 </resources>

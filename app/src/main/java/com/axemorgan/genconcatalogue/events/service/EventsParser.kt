@@ -150,15 +150,14 @@ class EventsParser @Inject constructor(private val contentHandler: SheetContentH
         private var builder: EventBuilder = EventBuilder()
 
         override fun startRow(i: Int) {
-            if(i == 0) {
-
-            }
             builder = EventBuilder()
         }
 
         override fun endRow(i: Int) {
-            val event = builder.create()
-            eventDao.put(event)
+            if (i != 0) {
+                val event = builder.create()
+                eventDao.put(event)
+            }
         }
 
         override fun cell(cellIdentifier: String, cellText: String, xssfComment: XSSFComment?) {

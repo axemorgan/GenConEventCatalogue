@@ -35,6 +35,8 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
     RecyclerView recyclerView;
     @BindView(R.id.event_list_empty_view)
     TextView emptyView;
+    @BindView(R.id.event_list_result_count)
+    TextView resultCountView;
 
     @Inject
     EventListContract.Presenter presenter;
@@ -73,14 +75,17 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
     @Override
     public void showEvents(List<Event> events) {
         adapter.setEvents(events);
+        resultCountView.setText(getResources().getQuantityString(R.plurals.event_list_search_result_count, events.size(), events.size()));
 
         recyclerView.setVisibility(View.VISIBLE);
+        resultCountView.setVisibility(View.VISIBLE);
         emptyView.setVisibility(View.GONE);
     }
 
     @Override
     public void showNoEventsFound() {
         recyclerView.setVisibility(View.GONE);
+        resultCountView.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
     }
 

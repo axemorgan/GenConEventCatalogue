@@ -4,20 +4,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/event_list_result_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:visibility="gone"
+        tools:text="Found 50 events"
+        tools:visibility="visible"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/event_list_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_list_result_count"
         android:scrollbars="vertical"
         tools:listitem="@layout/event_list_item"
-        tools:visibility="gone"/>
+        tools:visibility="visible"/>
 
     <TextView
         android:id="@+id/event_list_empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/event_list_no_events_found"/>
+        android:text="@string/event_list_no_events_found"
+        tools:visibility="gone"/>
 
 
 </RelativeLayout>
