@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.axemorgan.genconcatalogue.CatalogueApplication;
 import com.axemorgan.genconcatalogue.R;
+import com.axemorgan.genconcatalogue.components.SpinnerItem;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class FilterFragment extends Fragment implements FilterContract.View, Ada
     @BindView(R.id.filters_event_type_spinner)
     Spinner eventTypeSpinner;
 
-    private ArrayAdapter<String> eventTypeAdapter;
+    private ArrayAdapter<SpinnerItem<String>> eventTypeAdapter;
     private Unbinder unbinder;
 
     @Override
@@ -65,14 +66,14 @@ public class FilterFragment extends Fragment implements FilterContract.View, Ada
     }
 
     @Override
-    public void showEventTypes(List<String> types) {
+    public void showEventTypeFilters(List<SpinnerItem<String>> types) {
         eventTypeAdapter.clear();
         eventTypeAdapter.addAll(types);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        presenter.onEventTypeFilterSelected((String) adapterView.getItemAtPosition(position));
+        presenter.onEventTypeFilterSelected(((SpinnerItem<String>) adapterView.getItemAtPosition(position)).getValue());
     }
 
     @Override

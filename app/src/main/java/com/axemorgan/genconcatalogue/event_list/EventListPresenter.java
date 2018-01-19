@@ -15,7 +15,7 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import timber.log.Timber;
 
-public class EventListPresenter extends EventListContract.Presenter implements Function1<String, Unit> {
+public class EventListPresenter extends EventListContract.Presenter implements Function1<SearchModel, Unit> {
 
     private final SearchModel searchModel;
     private final EventDao eventDao;
@@ -39,10 +39,9 @@ public class EventListPresenter extends EventListContract.Presenter implements F
     }
 
     @Override
-    public Unit invoke(final String query) {
-        if (query.isEmpty()) {
-            this.fetchAllEvents();
-        } else {
+    public Unit invoke(final SearchModel searchModel) {
+        final String query = searchModel.getQuery();
+        if (searchModel.getEventTypeFilter().isEmpty()) {
             Timber.i("Searching for %s", query);
             eventDao.search("%" + query + "%")
                     .subscribeOn(Schedulers.io())
@@ -68,6 +67,32 @@ public class EventListPresenter extends EventListContract.Presenter implements F
                         @Override
                         public void onComplete() {
                             Timber.i("Subscription ended");
+                        }
+                    });
+        } else {
+            eventDao.searchWithEventType("%" + searchModel.getQuery() + "%", searchModel.getEventTypeFilter())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new DisposableSubscriber<List<Event>>() {
+                        @Override
+                        public void onNext(List<Event> events) {
+                            if (getView() != null) {
+                                if (events.isEmpty()) {
+                                    getViewOrThrow().showNoEventsFound();
+                                } else {
+                                    getViewOrThrow().showEvents(events);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable t) {
+                            Timber.e(t, "Error while searching with event type filter");
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            Timber.i("Subscription completed");
                         }
                     });
         }

@@ -19,6 +19,9 @@ public interface EventDao {
     @Query("SELECT * FROM Event WHERE title LIKE :query")
     Flowable<List<Event>> search(String query);
 
+    @Query("SELECT * FROM Event WHERE title like :query AND event_type = :eventType")
+    Flowable<List<Event>> searchWithEventType(String query, String eventType);
+
     @Query("SELECT * FROM Event WHERE id == :oneId")
     Single<Event> byId(String oneId);
 

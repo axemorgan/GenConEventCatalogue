@@ -150,6 +150,9 @@ class EventsParser @Inject constructor(private val contentHandler: SheetContentH
         private var builder: EventBuilder = EventBuilder()
 
         override fun startRow(i: Int) {
+            if(i == 0) {
+
+            }
             builder = EventBuilder()
         }
 
