@@ -21,6 +21,11 @@ class SearchModel @Inject constructor() {
         }
     }
 
+    var ageRequirementFilter: String by Delegates.observable("") { _, oldValue, newValue ->
+        if (oldValue != newValue) {
+            this.notifyObservers()
+        }
+    }
 
     fun addObserver(observer: (SearchModel) -> Unit) {
         observers.add(observer)

@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -22,18 +21,22 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemSelected;
 import butterknife.Unbinder;
 
 
-public class FilterFragment extends Fragment implements FilterContract.View, AdapterView.OnItemSelectedListener {
+public class FilterFragment extends Fragment implements FilterContract.View {
 
     @Inject
     FilterContract.Presenter presenter;
 
     @BindView(R.id.filters_event_type_spinner)
     Spinner eventTypeSpinner;
+    @BindView(R.id.filters_age_requirement_spinner)
+    Spinner ageRequirementSpinner;
 
     private ArrayAdapter<SpinnerItem<String>> eventTypeAdapter;
+    private ArrayAdapter<SpinnerItem<String>> ageRequirementAdapter;
     private Unbinder unbinder;
 
     @Override
@@ -55,7 +58,10 @@ public class FilterFragment extends Fragment implements FilterContract.View, Ada
         super.onViewCreated(view, savedInstanceState);
         eventTypeAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_1);
         eventTypeSpinner.setAdapter(eventTypeAdapter);
-        eventTypeSpinner.setOnItemSelectedListener(this);
+
+        ageRequirementAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_1);
+        ageRequirementSpinner.setAdapter(ageRequirementAdapter);
+
         presenter.attachView(this);
     }
 
@@ -72,12 +78,24 @@ public class FilterFragment extends Fragment implements FilterContract.View, Ada
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        presenter.onEventTypeFilterSelected(((SpinnerItem<String>) adapterView.getItemAtPosition(position)).getValue());
+    public void showAgeRequirementFilters(List<SpinnerItem<String>> items) {
+        ageRequirementAdapter.clear();
+        ageRequirementAdapter.addAll(items);
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+    @OnItemSelected(R.id.filters_event_type_spinner)
+    public void onEventTypeItemSelected(int position) {
+        SpinnerItem<String> item = eventTypeAdapter.getItem(position);
+        if (item != null) {
+            presenter.onEventTypeFilterSelected(item.getValue());
+        }
+    }
 
+    @OnItemSelected(R.id.filters_age_requirement_spinner)
+    public void onAgeRequirementItemSelected(int position) {
+        SpinnerItem<String> item = ageRequirementAdapter.getItem(position);
+        if (item != null) {
+            presenter.onAgeRequirementFilterSelected(item.getValue());
+        }
     }
 }

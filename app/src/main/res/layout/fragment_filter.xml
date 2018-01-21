@@ -8,11 +8,29 @@
     tools:context="com.axemorgan.genconcatalogue.filters.FilterFragment"
     tools:layout_gravity="end">
 
-    <Spinner
-        android:id="@+id/filters_event_type_spinner"
+    <TextView
+        android:id="@+id/filters_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/filters_header"/>
+
+    <Spinner
+        android:id="@+id/filters_event_type_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filters_header"
+        tools:listitem="@android:layout/simple_list_item_1"/>
+
+    <Spinner
+        android:id="@+id/filters_age_requirement_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filters_event_type_spinner"
+        tools:listitem="@android:layout/simple_list_item_1"/>
 
 </android.support.constraint.ConstraintLayout>

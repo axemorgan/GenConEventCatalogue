@@ -22,11 +22,20 @@ public interface EventDao {
     @Query("SELECT * FROM Event WHERE title like :query AND event_type = :eventType")
     Flowable<List<Event>> searchWithEventType(String query, String eventType);
 
+    @Query("SELECT * FROM Event WHERE title LIKE :query AND age_required = :ageRequirement")
+    Flowable<List<Event>> searchWithAgeRequirement(String query, String ageRequirement);
+
+    @Query("SELECT * FROM Event WHERE title LIKE :query AND event_type = :eventType AND age_required = :ageRequirement")
+    Flowable<List<Event>> searchWithTypeAndAgeRequirement(String query, String eventType, String ageRequirement);
+
     @Query("SELECT * FROM Event WHERE id == :oneId")
     Single<Event> byId(String oneId);
 
     @Query("SELECT DISTINCT event_type FROM Event ORDER BY event_type ASC")
     Flowable<List<String>> getAllEventTypes();
+
+    @Query("SELECT DISTINCT age_required FROM Event ORDER BY age_required ASC")
+    Flowable<List<String>> getAllAgeRequirements();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void put(Event event);

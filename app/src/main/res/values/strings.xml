@@ -19,4 +19,6 @@
         <item quantity="one">Found %s event</item>
         <item quantity="other">Found %s events</item>
     </plurals>
+
+    <string name="filters_header">Filter Events</string>
 </resources>

@@ -9,10 +9,14 @@ public interface FilterContract {
     interface View {
 
         void showEventTypeFilters(List<SpinnerItem<String>> types);
+
+        void showAgeRequirementFilters(List<SpinnerItem<String>> items);
     }
 
-    public abstract class Presenter extends AbstractPresenter<View> {
+    abstract class Presenter extends AbstractPresenter<View> {
 
         public abstract void onEventTypeFilterSelected(String type);
+
+        public abstract void onAgeRequirementFilterSelected(String item);
     }
 }

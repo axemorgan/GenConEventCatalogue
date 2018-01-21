@@ -17,6 +17,7 @@ import timber.log.Timber;
 public class FilterPresenter extends FilterContract.Presenter {
 
     private static final String NO_EVENT_TYPE_FILTER = "";
+    private static final String ANY_AGE_REQUIREMENT_FILTER = "";
 
     private final EventDao eventDao;
     private final SearchModel searchModel;
@@ -50,12 +51,39 @@ public class FilterPresenter extends FilterContract.Presenter {
                         Timber.i("Subscription completed.");
                     }
                 });
+
+        eventDao.getAllAgeRequirements()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSubscriber<List<String>>() {
+                    @Override
+                    public void onNext(List<String> items) {
+                        if (getView() != null) {
+                            getViewOrThrow().showAgeRequirementFilters(getAgeRequirementSpinnerItems(items));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        Timber.e(t);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Timber.i("Subscription Completed.");
+                    }
+                });
     }
 
     @Override
     public void onEventTypeFilterSelected(String type) {
         Timber.i("Filtering on Event Type: %s", type);
         searchModel.setEventTypeFilter(type);
+    }
+
+    @Override
+    public void onAgeRequirementFilterSelected(String item) {
+        searchModel.setAgeRequirementFilter(item);
     }
 
     private List<SpinnerItem<String>> getEventTypeSpinnerItems(List<String> eventTypes) {
@@ -65,5 +93,14 @@ public class FilterPresenter extends FilterContract.Presenter {
             types.add(new SpinnerItem<>(eventType, eventType));
         }
         return types;
+    }
+
+    private List<SpinnerItem<String>> getAgeRequirementSpinnerItems(List<String> items) {
+        ArrayList<SpinnerItem<String>> options = new ArrayList<>(items.size() + 1);
+        options.add(new SpinnerItem<>("Any Age Requirement", ANY_AGE_REQUIREMENT_FILTER));
+        for (String option : items) {
+            options.add(new SpinnerItem<>(option, option));
+        }
+        return options;
     }
 }

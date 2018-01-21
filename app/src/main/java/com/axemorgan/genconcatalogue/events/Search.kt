@@ -12,10 +12,19 @@ class Search @Inject constructor(val eventDao: EventDao) {
     fun using(searchModel: SearchModel): Flowable<List<Event>> {
         Timber.i("Searching for \"%s\" with event filter \"%s\"", searchModel.query, searchModel.eventTypeFilter)
 
+        // TODO this is going to get out of hand very quickly
         return if (searchModel.eventTypeFilter.isEmpty()) {
-            eventDao.search("%" + searchModel.query + "%")
+            if (!searchModel.ageRequirementFilter.isEmpty()) {
+                eventDao.searchWithAgeRequirement("%" + searchModel.query + "%", searchModel.ageRequirementFilter)
+            } else {
+                eventDao.search("%" + searchModel.query + "%")
+            }
         } else {
-            eventDao.searchWithEventType("%" + searchModel.query + "%", searchModel.eventTypeFilter)
+            if (!searchModel.ageRequirementFilter.isEmpty()) {
+                eventDao.searchWithTypeAndAgeRequirement("%" + searchModel.query + "%", searchModel.eventTypeFilter, searchModel.ageRequirementFilter)
+            } else {
+                eventDao.searchWithEventType("%" + searchModel.query + "%", searchModel.eventTypeFilter)
+            }
         }
     }
 }
