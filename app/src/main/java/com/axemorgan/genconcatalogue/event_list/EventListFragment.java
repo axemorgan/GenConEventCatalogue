@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.axemorgan.genconcatalogue.CatalogueApplication;
 import com.axemorgan.genconcatalogue.R;
+import com.axemorgan.genconcatalogue.components.NumberFormats;
 import com.axemorgan.genconcatalogue.event_detail.EventDetailActivity;
 import com.axemorgan.genconcatalogue.events.Event;
 
@@ -75,7 +76,7 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
     @Override
     public void showEvents(List<Event> events) {
         adapter.setEvents(events);
-        resultCountView.setText(getResources().getQuantityString(R.plurals.event_list_search_result_count, events.size(), events.size()));
+        resultCountView.setText(getResources().getQuantityString(R.plurals.event_list_search_result_count, events.size(), NumberFormats.INSTANCE.format(events.size())));
 
         recyclerView.setVisibility(View.VISIBLE);
         resultCountView.setVisibility(View.VISIBLE);
