@@ -3,7 +3,7 @@ package com.axemorgan.genconcatalogue.dagger;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
-import com.axemorgan.genconcatalogue.SearchActivityContract;
+import com.axemorgan.genconcatalogue.SearchContract;
 import com.axemorgan.genconcatalogue.SearchModel;
 import com.axemorgan.genconcatalogue.SearchPresenter;
 import com.axemorgan.genconcatalogue.event_detail.EventDetailContract;
@@ -16,6 +16,8 @@ import com.axemorgan.genconcatalogue.events.Search;
 import com.axemorgan.genconcatalogue.events.UpdateEvent;
 import com.axemorgan.genconcatalogue.filters.FilterContract;
 import com.axemorgan.genconcatalogue.filters.FilterPresenter;
+import com.axemorgan.genconcatalogue.schedule.ScheduleContract;
+import com.axemorgan.genconcatalogue.schedule.SchedulePresenter;
 
 import javax.inject.Singleton;
 
@@ -51,7 +53,7 @@ public class AppModule {
     }
 
     @Provides
-    SearchActivityContract.Presenter provideSearchPresenter(SearchModel model) {
+    SearchContract.Presenter provideSearchPresenter(SearchModel model) {
         return new SearchPresenter(model);
     }
 
@@ -68,5 +70,10 @@ public class AppModule {
     @Provides
     FilterContract.Presenter provideFilterPresenter(EventDao eventDao, SearchModel searchModel) {
         return new FilterPresenter(eventDao, searchModel);
+    }
+
+    @Provides
+    ScheduleContract.Presenter provideSchedulePresenter(EventDao eventDao) {
+        return new SchedulePresenter(eventDao);
     }
 }

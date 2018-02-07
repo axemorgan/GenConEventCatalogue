@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Gen Con Catalogue</string>
     <string name="title_events">Events</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_schedule">Schedule</string>
     <string name="title_notifications">Notifications</string>
     <string name="menu_update_events">Update Event List</string>
     <string name="events_updating_loading_message">Checking for updated events…</string>

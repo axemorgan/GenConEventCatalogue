@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 
 import com.axemorgan.genconcatalogue.event_list.EventListFragment;
+import com.axemorgan.genconcatalogue.schedule.ScheduleFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -14,6 +15,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements EventListFragment.DrawerHost {
 
     private static final String TAG_EVENT_LIST = "EVENT_LIST";
+    private static final String TAG_SCHEDULE = "SCHEDULE";
 
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
@@ -61,7 +63,16 @@ public class MainActivity extends AppCompatActivity implements EventListFragment
                 .commit();
     }
 
+    private void showScheduleFragment() {
+        ScheduleFragment scheduleFragment = (ScheduleFragment) getSupportFragmentManager().findFragmentByTag(TAG_SCHEDULE);
+        if (scheduleFragment == null) {
+            scheduleFragment = ScheduleFragment.Factory.create();
+        }
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, scheduleFragment, TAG_SCHEDULE)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
