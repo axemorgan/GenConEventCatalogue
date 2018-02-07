@@ -1,0 +1,34 @@
+{
+  "events": [
+    {
+      "name": "Battletech Grinder",
+      "description": "Test your metal in the Battletech Grinder!  Start in a light 'mech and work your way all the way up to an assault class.",
+      "time_range": "Thur 9:00am-10:00pm",
+      "tickets": "Available Tickets: 12"
+    },
+    {
+      "name": "Death Star II: Star Wars Mass Battle",
+      "description": "Join Lando in leading the assault or help the Empire destroy them & salvage the loss of the Emperor.",
+      "time_range": "Thur 4:00pm-6:00pm",
+      "tickets": "Available Tickets: 1"
+    },
+    {
+      "name": "Lost Religion Found-Side Quest: A Good XenoCon",
+      "description": "Slogging through the frozen wasteland, you see artifacts from a distant age. You stumble across a large sygil etched in the ice. 7th Level. No prior experience with LRF is needed.",
+      "time_range": "Thur 9:00pm-10:00pm",
+      "tickets": "Available Tickets: 40"
+    },
+    {
+      "name": "X-Wing Hunger Games",
+      "description": "Be the last ship standing & win the 2nd Annual Hunger Games",
+      "time_range": "Fri 3:00pm-4:30pm",
+      "tickets": "Available Tickets: 2"
+    },
+    {
+      "name": "Paint a Harry Potter Ornament Set",
+      "description": "Each student will receive a set of hand cut clay ornaments to decorate. Ornaments are easy to paint because they are all stamped with image detail. ",
+      "time_range": "Fri 6:00pm-7:00pm",
+      "tickets": "Available Tickets: 7"
+    }
+  ]
+}
