@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 
 import org.threeten.bp.ZonedDateTime;
 
-@SuppressWarnings("unused")
 @Entity
 public class Event {
 
@@ -96,6 +95,8 @@ public class Event {
     @ColumnInfo(name = "last_modified")
     private String lastModified;
 
+    @ColumnInfo(name = "saved")
+    private boolean saved;
 
     public Event(String id, String group, String title, String shortDescription, String longDescription,
                  String eventType, String gameSystem, String rulesEdition, int minimumPlayers, int maximumPlayers,
@@ -131,6 +132,7 @@ public class Event {
         this.tableNumber = tableNumber;
         this.availableTickets = availableTickets;
         this.lastModified = lastModified;
+        this.saved = false;
     }
 
     public String getId() {
@@ -356,6 +358,14 @@ public class Event {
 
     public void setLastModified(String lastModified) {
         this.lastModified = lastModified;
+    }
+
+    public boolean isSaved() {
+        return saved;
+    }
+
+    public void setSaved(boolean saved) {
+        this.saved = saved;
     }
 
     @Override

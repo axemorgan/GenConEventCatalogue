@@ -3,6 +3,7 @@ package com.axemorgan.genconcatalogue.event_detail;
 import com.axemorgan.genconcatalogue.components.DateFormats;
 import com.axemorgan.genconcatalogue.events.Event;
 import com.axemorgan.genconcatalogue.events.EventDao;
+import com.axemorgan.genconcatalogue.events.UpdateEvent;
 
 import javax.inject.Inject;
 
@@ -16,11 +17,13 @@ import timber.log.Timber;
 public class EventDetailPresenter extends EventDetailContract.Presenter {
 
     private final EventDao eventDao;
+    private final UpdateEvent updateEvent;
     private Event event;
 
     @Inject
-    public EventDetailPresenter(EventDao eventDao) {
+    public EventDetailPresenter(EventDao eventDao, UpdateEvent updateEvent) {
         this.eventDao = eventDao;
+        this.updateEvent = updateEvent;
     }
 
     @Override
@@ -75,6 +78,12 @@ public class EventDetailPresenter extends EventDetailContract.Presenter {
                             } else {
                                 view.showContactEmail(event.getEmail());
                             }
+
+                            if (event.isSaved()) {
+                                view.showForgetEventButton();
+                            } else {
+                                view.showSaveEventButton();
+                            }
                         }
                     }
 
@@ -93,6 +102,22 @@ public class EventDetailPresenter extends EventDetailContract.Presenter {
                 event.getTitle(),
                 this.getEventLocationString(event),
                 event.getShortDescription());
+    }
+
+    @Override
+    void onSaveEvent() {
+        event.setSaved(!event.isSaved());
+        updateEvent.updateEvent(event).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    if (getView() != null) {
+                        if (event.isSaved()) {
+                            getViewOrThrow().showForgetEventButton();
+                        } else {
+                            getViewOrThrow().showSaveEventButton();
+                        }
+                    }
+                });
     }
 
     private String getEventLocationString(Event event) {

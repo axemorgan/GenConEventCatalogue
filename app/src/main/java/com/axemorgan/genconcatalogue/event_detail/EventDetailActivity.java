@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -60,6 +61,8 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     TextView materialsProvidedField;
     @BindView(R.id.event_detail_tickets)
     TextView ticketsField;
+    @BindView(R.id.event_detail_save_button)
+    FloatingActionButton saveButton;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -211,6 +214,16 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     }
 
     @Override
+    public void showSaveEventButton() {
+        saveButton.setImageResource(R.drawable.ic_event_available_black_24dp);
+    }
+
+    @Override
+    public void showForgetEventButton() {
+        saveButton.setImageResource(R.drawable.ic_event_busy_black_24dp);
+    }
+
+    @Override
     public void launchCalendarIntent(long startTime, long endTime, String title, String location, String description) {
         this.startActivity(new Intent(Intent.ACTION_INSERT)
                 .setData(CalendarContract.Events.CONTENT_URI)
@@ -224,5 +237,10 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     @OnClick(R.id.event_detail_date_time)
     public void onDateTimeClicked() {
         presenter.onAddToCalendar();
+    }
+
+    @OnClick(R.id.event_detail_save_button)
+    public void onSaveButtonPressed() {
+        presenter.onSaveEvent();
     }
 }

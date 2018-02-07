@@ -46,6 +46,10 @@ public interface EventDetailContract {
 
         void showAvailableTickets(String ticketsText);
 
+        void showSaveEventButton();
+
+        void showForgetEventButton();
+
         void launchCalendarIntent(long startTime, long endTime, String title, String location, String description);
 
 
@@ -53,5 +57,7 @@ public interface EventDetailContract {
 
     abstract class Presenter extends AbstractPresenter<View> {
         abstract void onAddToCalendar();
+
+        abstract void onSaveEvent();
     }
 }

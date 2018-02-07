@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,222 +7,238 @@
     android:layout_height="match_parent"
     tools:context="com.axemorgan.genconcatalogue.event_detail.EventDetailActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_scrollFlags="scroll|enterAlways"
+        tools:layout_editor_absoluteY="0dp">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="0dp"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/event_detail_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:paddingBottom="16dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="0dp">
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            tools:text="Super Cool Big Event Title"/>
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/event_detail_group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            tools:text="Game Group Name"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
 
             <TextView
-                android:id="@+id/event_detail_title"
-                android:layout_width="wrap_content"
+                android:id="@+id/event_detail_event_type"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                tools:text="Super Cool Big Event Title"/>
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                tools:text="RPG - Role Playing Game"/>
 
             <TextView
-                android:id="@+id/event_detail_group_name"
-                android:layout_width="wrap_content"
+                android:id="@+id/event_detail_system"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
-                tools:text="Game Group Name"/>
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_detail_event_type"
+                tools:text="Dungeons and Dragons 5th Edition"/>
 
-        </android.support.design.widget.AppBarLayout>
+            <TextView
+                android:id="@+id/event_detail_short_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_detail_system"
+                tools:text="Look, everyone wants to be like Germany, but do we really have the pure strength of 'will'? Guess again. We need rest. The spirit is willing, but the flesh is spongy and bruised. Meh."/>
 
+            <TextView
+                android:id="@+id/event_detail_date_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_event_black_24dp"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_detail_short_description"
+                tools:text="Thur Aug 3, 8:00PM-10:00PM"/>
 
-        <TextView
-            android:id="@+id/event_detail_event_type"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            tools:text="RPG - Role Playing Game"/>
+            <TextView
+                android:id="@+id/event_detail_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_location_on_black_24dp"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_detail_date_time"
+                tools:text="ICC 404, Table 42"/>
 
-        <TextView
-            android:id="@+id/event_detail_system"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_detail_event_type"
-            tools:text="Dungeons and Dragons 5th Edition"/>
+            <TextView
+                android:id="@+id/event_detail_player_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_detail_location"
+                tools:text="1-255 Players"/>
 
-        <TextView
-            android:id="@+id/event_detail_short_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_detail_system"
-            tools:text="Look, everyone wants to be like Germany, but do we really have the pure strength of 'will'? Guess again. We need rest. The spirit is willing, but the flesh is spongy and bruised. Meh."/>
+            <TextView
+                android:id="@+id/event_detail_long_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_detail_player_count"
+                tools:text="There's no part of that sentence I didn't like! Too much work. Let's burn it and say we dumped it in the sewer. Who's brave enough to fly into something we all keep calling a death sphere? Say what? And remember, don't do anything that affects anything, unless it turns out you were supposed to, in which case, for the love of God, don't not do it!"/>
 
-        <TextView
-            android:id="@+id/event_detail_date_time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:drawablePadding="8dp"
-            android:drawableStart="@drawable/ic_event_black_24dp"
-            android:gravity="center_vertical"
-            android:minHeight="48dp"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_detail_short_description"
-            tools:text="Thur Aug 3, 8:00PM-10:00PM"/>
+            <TextView
+                android:id="@+id/event_detail_group_website"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:autoLink="web"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_detail_long_description"
+                tools:text="www.example.com"/>
 
-        <TextView
-            android:id="@+id/event_detail_location"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:drawablePadding="8dp"
-            android:drawableStart="@drawable/ic_location_on_black_24dp"
-            android:gravity="center_vertical"
-            android:minHeight="48dp"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_detail_date_time"
-            tools:text="ICC 404, Table 42"/>
+            <TextView
+                android:id="@+id/event_detail_contact_email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:autoLink="email"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_detail_group_website"
+                tools:text="john.doe@example.com"/>
 
-        <TextView
-            android:id="@+id/event_detail_player_count"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/event_detail_location"
-            tools:text="1-255 Players"/>
+            <TextView
+                android:id="@+id/event_detail_gm_names"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_detail_contact_email"
+                tools:text="GMs: John Doe, Jane Doe"/>
 
-        <TextView
-            android:id="@+id/event_detail_long_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_detail_player_count"
-            tools:text="There's no part of that sentence I didn't like! Too much work. Let's burn it and say we dumped it in the sewer. Who's brave enough to fly into something we all keep calling a death sphere? Say what? And remember, don't do anything that affects anything, unless it turns out you were supposed to, in which case, for the love of God, don't not do it!"/>
+            <TextView
+                android:id="@+id/event_detail_age_requirement"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_detail_gm_names"
+                tools:text="Age Requirement: Everyone (6+)"/>
 
-        <TextView
-            android:id="@+id/event_detail_group_website"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:autoLink="web"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/event_detail_long_description"
-            tools:text="www.example.com"/>
+            <TextView
+                android:id="@+id/event_detail_experience_requirement"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_detail_age_requirement"
+                tools:text="Experience Required: Some (You've played it a bit and understand the basics)"/>
 
-        <TextView
-            android:id="@+id/event_detail_contact_email"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:autoLink="email"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/event_detail_group_website"
-            tools:text="john.doe@example.com"/>
+            <TextView
+                android:id="@+id/event_detail_materials_provided"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_detail_experience_requirement"
+                tools:text="Materials Provided"/>
 
-        <TextView
-            android:id="@+id/event_detail_gm_names"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/event_detail_contact_email"
-            tools:text="GMs: John Doe, Jane Doe"/>
+            <TextView
+                android:id="@+id/event_detail_tickets"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_detail_materials_provided"
+                tools:text="$2 per Ticket, 4/8 Remaining"/>
 
-        <TextView
-            android:id="@+id/event_detail_age_requirement"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/event_detail_gm_names"
-            tools:text="Age Requirement: Everyone (6+)"/>
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/event_detail_experience_requirement"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/event_detail_age_requirement"
-            tools:text="Experience Required: Some (You've played it a bit and understand the basics)"/>
-
-        <TextView
-            android:id="@+id/event_detail_materials_provided"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/event_detail_experience_requirement"
-            tools:text="Materials Provided"/>
-
-        <TextView
-            android:id="@+id/event_detail_tickets"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/event_detail_materials_provided"
-            tools:text="$2 per Ticket, 4/8 Remaining"/>
-
-    </android.support.constraint.ConstraintLayout>
-</ScrollView>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/event_detail_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_event_available_black_24dp"
+        app:layout_anchor="@id/appBarLayout"
+        app:layout_anchorGravity="end|bottom"/>
+</android.support.design.widget.CoordinatorLayout>
