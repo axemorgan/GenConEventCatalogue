@@ -2,7 +2,7 @@ package com.axemorgan.genconcatalogue;
 
 import com.axemorgan.genconcatalogue.components.AbstractPresenter;
 
-public interface SearchActivityContract {
+public interface SearchContract {
 
     interface View {
 
@@ -11,9 +11,9 @@ public interface SearchActivityContract {
 
     abstract class Presenter extends AbstractPresenter<View> {
 
-        abstract void performSearch();
+        public abstract void performSearch();
 
-        abstract void onSearchClosed();
+        public abstract void onSearchClosed();
     }
 
 }

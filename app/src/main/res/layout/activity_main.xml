@@ -5,70 +5,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.axemorgan.genconcatalogue.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.axemorgan.genconcatalogue.MainActivity">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/content"
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_scrollFlags="scroll|enterAlways">
-
-                    <android.support.v7.widget.SearchView
-                        android:id="@+id/search_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone"/>
-
-
-                </android.support.v7.widget.Toolbar>
-
-            </android.support.design.widget.AppBarLayout>
-
-            <FrameLayout
-                android:id="@+id/fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-            <include layout="@layout/loading_bottom_sheet"/>
-
-        </android.support.design.widget.CoordinatorLayout>
+            android:layout_height="wrap_content"
+            android:layout_above="@id/navigation"
+            android:layout_alignParentTop="true"/>
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
             android:background="?android:attr/windowBackground"
             app:menu="@menu/navigation"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <!--<LinearLayout-->
     <fragment
         android:id="@+id/filter_fragment"
         class="com.axemorgan.genconcatalogue.filters.FilterFragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"/>
-
-    <!--</LinearLayout>-->
 
 </android.support.v4.widget.DrawerLayout>

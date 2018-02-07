@@ -2,7 +2,7 @@ package com.axemorgan.genconcatalogue;
 
 import javax.inject.Inject;
 
-public class SearchPresenter extends SearchActivityContract.Presenter {
+public class SearchPresenter extends SearchContract.Presenter {
 
     private final SearchModel searchModel;
 
@@ -12,12 +12,12 @@ public class SearchPresenter extends SearchActivityContract.Presenter {
     }
 
     @Override
-    void performSearch() {
+    public void performSearch() {
         searchModel.setQuery(this.getViewOrThrow().getSearchText());
     }
 
     @Override
-    void onSearchClosed() {
+    public void onSearchClosed() {
         searchModel.setQuery("");
     }
 }
