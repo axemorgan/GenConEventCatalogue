@@ -38,6 +38,9 @@ public interface EventDao {
     @Query("SELECT DISTINCT age_required FROM Event ORDER BY age_required ASC")
     Flowable<List<String>> getAllAgeRequirements();
 
+    @Query("SELECT * FROM Event WHERE saved = 1")
+    Flowable<List<Event>> getAllSavedEvents();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void put(Event event);
 

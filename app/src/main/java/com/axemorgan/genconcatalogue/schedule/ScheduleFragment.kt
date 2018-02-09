@@ -13,6 +13,10 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.axemorgan.genconcatalogue.CatalogueApplication
 import com.axemorgan.genconcatalogue.R
+import com.axemorgan.genconcatalogue.components.DateFormats.formatDay
+import com.axemorgan.genconcatalogue.events.Day
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneOffset
 import javax.inject.Inject
 
 class ScheduleFragment : Fragment(), ScheduleContract.View {
@@ -61,14 +65,14 @@ class ScheduleFragment : Fragment(), ScheduleContract.View {
 class SchedulePagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        return DayFragment.create()
+        return DayFragment.create(Day.values()[position])
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return "Day"
+        return formatDay(LocalDateTime.ofEpochSecond(Day.values()[position].startTime, 0, ZoneOffset.ofHours(-4)))
     }
 
     override fun getCount(): Int {
-        return 4
+        return Day.values().size
     }
 }
