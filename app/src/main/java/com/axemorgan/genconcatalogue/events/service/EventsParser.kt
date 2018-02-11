@@ -213,7 +213,7 @@ class EventsParser @Inject constructor(private val contentHandler: SheetContentH
                 }
                 "N" -> {
                     try {
-                        builder.setStartDate(ZonedDateTime.of(LocalDateTime.parse(cellText, DATE_TIME_FORMATTER), ZoneId.of("-5")))
+                        builder.setStartDate(ZonedDateTime.of(LocalDateTime.parse(cellText, DATE_TIME_FORMATTER), ZoneId.of("-4")))
                     } catch (e: DateTimeParseException) {
                         Timber.w(e, "Unable to parse a start date from %s", cellText)
                     }
@@ -229,7 +229,7 @@ class EventsParser @Inject constructor(private val contentHandler: SheetContentH
                 }
                 "P" -> {
                     try {
-                        builder.setEndDate(ZonedDateTime.of(LocalDateTime.parse(cellText, DATE_TIME_FORMATTER), ZoneId.of("-5")))
+                        builder.setEndDate(ZonedDateTime.of(LocalDateTime.parse(cellText, DATE_TIME_FORMATTER), ZoneId.of("-4")))
                     } catch (e: DateTimeParseException) {
                         Timber.w(e, "Unable to parse an end time from %s", cellText)
                     }

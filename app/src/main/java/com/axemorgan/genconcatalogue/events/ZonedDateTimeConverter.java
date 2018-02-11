@@ -2,25 +2,19 @@ package com.axemorgan.genconcatalogue.events;
 
 import android.arch.persistence.room.TypeConverter;
 
+import org.threeten.bp.Instant;
+import org.threeten.bp.ZoneOffset;
 import org.threeten.bp.ZonedDateTime;
 
 public class ZonedDateTimeConverter {
 
     @TypeConverter
-    public static ZonedDateTime fromDateString(String date) {
-        if (!date.isEmpty()) {
-            return ZonedDateTime.parse(date);
-        } else {
-            return null;
-        }
+    public static ZonedDateTime fromEpochSecond(long date) {
+        return ZonedDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneOffset.UTC);
     }
 
     @TypeConverter
-    public static String fromZonedDateTime(ZonedDateTime zdt) {
-        if (zdt != null) {
-            return zdt.toString();
-        } else {
-            return "";
-        }
+    public static long fromZonedDateTime(ZonedDateTime zdt) {
+        return zdt.toEpochSecond();
     }
 }

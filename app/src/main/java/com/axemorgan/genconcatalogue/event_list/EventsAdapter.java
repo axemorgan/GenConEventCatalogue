@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.axemorgan.genconcatalogue.R;
 import com.axemorgan.genconcatalogue.events.Event;
 
+import org.threeten.bp.ZoneId;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
@@ -57,8 +58,8 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolder> {
 
         if (event.getStartDate() != null && event.getEndDate() != null) {
             holder.eventTime.setText(
-                    event.getStartDate().format(DateTimeFormatter.ofPattern("E h:mma"))
-                            + "\u2014" + event.getEndDate().format(DateTimeFormatter.ofPattern("h:mma")));
+                    event.getStartDate().format(DateTimeFormatter.ofPattern("E h:mma").withZone(ZoneId.systemDefault()))
+                            + "\u2014" + event.getEndDate().format(DateTimeFormatter.ofPattern("h:mma").withZone(ZoneId.systemDefault())));
         }
 
         holder.ticketCount.setText(holder.itemView.getContext().getString(R.string.event_list_item_available_tickets, event.getAvailableTickets()));
