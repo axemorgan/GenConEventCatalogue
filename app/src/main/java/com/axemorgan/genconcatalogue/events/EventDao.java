@@ -44,6 +44,9 @@ public interface EventDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void put(Event event);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void putAll(List<Event> events);
+
     @Update
     void update(Event event);
 }

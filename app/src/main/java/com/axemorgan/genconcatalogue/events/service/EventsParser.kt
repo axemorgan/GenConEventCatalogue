@@ -1,5 +1,6 @@
 package com.axemorgan.genconcatalogue.events.service
 
+import com.axemorgan.genconcatalogue.events.Event
 import com.axemorgan.genconcatalogue.events.EventBuilder
 import com.axemorgan.genconcatalogue.events.EventDao
 import com.axemorgan.genconcatalogue.events.EventUpdateService.DATE_TIME_FORMATTER
@@ -26,11 +27,12 @@ import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 import javax.inject.Inject
+import javax.inject.Singleton
 import javax.xml.parsers.ParserConfigurationException
 import javax.xml.parsers.SAXParser
 import javax.xml.parsers.SAXParserFactory
 
-class EventsParser @Inject constructor(private val contentHandler: SheetContentHandler) {
+class EventsParser @Inject constructor(private val contentHandler: SheetContentHandler, private val batcher: Batcher) {
 
     fun parseEvents(fileStream: InputStream) {
         try {
@@ -60,6 +62,7 @@ class EventsParser @Inject constructor(private val contentHandler: SheetContentH
                         styles, null, strings, contentHandler, formatter, false)
                 parser.contentHandler = handler
                 parser.parse(InputSource(stream))
+                batcher.finish()
                 stream.close()
                 ++index
             }
@@ -145,7 +148,7 @@ class EventsParser @Inject constructor(private val contentHandler: SheetContentH
         }
     }
 
-    class SheetContentHandler @Inject constructor(private val eventDao: EventDao) : XSSFSheetXMLHandler.SheetContentsHandler {
+    class SheetContentHandler @Inject constructor(private val batcher: Batcher) : XSSFSheetXMLHandler.SheetContentsHandler {
 
         private var builder: EventBuilder = EventBuilder()
 
@@ -156,7 +159,7 @@ class EventsParser @Inject constructor(private val contentHandler: SheetContentH
         override fun endRow(i: Int) {
             if (i != 0) {
                 val event = builder.create()
-                eventDao.put(event)
+                batcher.put(event)
             }
         }
 
@@ -310,6 +313,26 @@ class EventsParser @Inject constructor(private val contentHandler: SheetContentH
             }
 
             return columnId
+        }
+    }
+
+    @Singleton
+    class Batcher @Inject constructor(private val eventDao: EventDao) {
+
+        private val maxBufferSize = 20
+        private val buffer = ArrayList<Event>(maxBufferSize)
+
+        fun put(event: Event) {
+            if (buffer.size >= maxBufferSize) {
+                eventDao.putAll(buffer)
+                buffer.clear()
+            }
+            buffer.add(event)
+        }
+
+        fun finish() {
+            eventDao.putAll(buffer)
+            buffer.clear()
         }
     }
 }
