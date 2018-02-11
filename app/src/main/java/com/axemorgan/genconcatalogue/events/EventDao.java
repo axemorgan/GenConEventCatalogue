@@ -41,8 +41,8 @@ public interface EventDao {
     @Query("SELECT * FROM Event WHERE saved = 1")
     Flowable<List<Event>> getAllSavedEvents();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void put(Event event);
+    @Query("SELECT * FROM Event WHERE saved = 1 AND start_date > :dayStart AND end_date < :dayEnd")
+    Flowable<List<Event>> getSavedEventsForDay(long dayStart, long dayEnd);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void putAll(List<Event> events);

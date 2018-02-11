@@ -8,7 +8,7 @@ import javax.inject.Inject
 class DayFragmentPresenter @Inject constructor(val eventDao: EventDao) : DayContract.Presenter() {
 
     override fun onViewAttached() {
-        eventDao.allSavedEvents
+        eventDao.getSavedEventsForDay(viewOrThrow.getDay().startTime, viewOrThrow.getDay().endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { events -> view?.showEvents(events) }

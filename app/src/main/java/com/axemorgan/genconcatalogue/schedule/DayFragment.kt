@@ -19,10 +19,12 @@ import javax.inject.Inject
 class DayFragment : Fragment(), DayContract.View {
 
     companion object {
+        const val ARG_DAY = "DAY"
+
         fun create(day: Day): DayFragment {
             val fragment = DayFragment()
             val bundle = Bundle()
-            bundle.putSerializable("DAY", day)
+            bundle.putSerializable(ARG_DAY, day)
             fragment.arguments = bundle
             return fragment
         }
@@ -62,6 +64,10 @@ class DayFragment : Fragment(), DayContract.View {
         super.onDestroyView()
         unbinder.unbind()
         presenter.detachView()
+    }
+
+    override fun getDay(): Day {
+        return arguments?.getSerializable(ARG_DAY) as Day
     }
 
     override fun showEvents(events: List<Event>) {
