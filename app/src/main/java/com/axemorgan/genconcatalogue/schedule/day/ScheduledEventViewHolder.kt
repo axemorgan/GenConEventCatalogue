@@ -1,4 +1,4 @@
-package com.axemorgan.genconcatalogue.schedule
+package com.axemorgan.genconcatalogue.schedule.day
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

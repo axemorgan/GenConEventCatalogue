@@ -1,4 +1,4 @@
-package com.axemorgan.genconcatalogue.schedule
+package com.axemorgan.genconcatalogue.schedule.day
 
 import com.axemorgan.genconcatalogue.events.EventDao
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -8,7 +8,7 @@ import com.axemorgan.genconcatalogue.event_list.EventListFragment;
 import com.axemorgan.genconcatalogue.events.EventDao;
 import com.axemorgan.genconcatalogue.events.EventUpdateService;
 import com.axemorgan.genconcatalogue.filters.FilterFragment;
-import com.axemorgan.genconcatalogue.schedule.DayFragment;
+import com.axemorgan.genconcatalogue.schedule.day.DayFragment;
 import com.axemorgan.genconcatalogue.schedule.ScheduleFragment;
 
 import org.jetbrains.annotations.NotNull;

@@ -20,5 +20,10 @@
         <item quantity="other">Found %s events</item>
     </plurals>
 
+    <plurals name="scheduled_event_duration">
+        <item quantity="one">%s Hour</item>
+        <item quantity="other">%s Hours</item>
+    </plurals>
+
     <string name="filters_header">Filter Events</string>
 </resources>

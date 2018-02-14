@@ -1,7 +1,9 @@
 package com.axemorgan.genconcatalogue.components
 
+import org.threeten.bp.LocalTime
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.FormatStyle
 import org.threeten.bp.temporal.TemporalAccessor
 
 object DateFormats {
@@ -10,6 +12,7 @@ object DateFormats {
     private val startDateFormatter = lazy { DateTimeFormatter.ofPattern("EEEE, LLL d h:mma") }
     private val endDateFormatter = lazy { DateTimeFormatter.ofPattern("h:mma") }
     private val longEndDateFormatter = lazy { DateTimeFormatter.ofPattern("EEEE, LLL d h:mma") }
+    private val localTimeHourFormatter = lazy { DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT) }
 
     private val dayFormat = lazy { DateTimeFormatter.ofPattern("EEEE") }
 
@@ -27,5 +30,9 @@ object DateFormats {
 
     fun formatDay(date: TemporalAccessor): String {
         return dayFormat.value.format(date)
+    }
+
+    fun formatToHour(time: LocalTime): String {
+        return localTimeHourFormatter.value.format(time)
     }
 }

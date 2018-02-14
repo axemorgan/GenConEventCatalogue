@@ -1,4 +1,4 @@
-package com.axemorgan.genconcatalogue.schedule
+package com.axemorgan.genconcatalogue.schedule.day
 
 import com.axemorgan.genconcatalogue.components.AbstractPresenter
 import com.axemorgan.genconcatalogue.events.Day

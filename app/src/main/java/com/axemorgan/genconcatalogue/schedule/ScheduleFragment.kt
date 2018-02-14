@@ -15,6 +15,7 @@ import com.axemorgan.genconcatalogue.CatalogueApplication
 import com.axemorgan.genconcatalogue.R
 import com.axemorgan.genconcatalogue.components.DateFormats.formatDay
 import com.axemorgan.genconcatalogue.events.Day
+import com.axemorgan.genconcatalogue.schedule.day.DayFragment
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import javax.inject.Inject

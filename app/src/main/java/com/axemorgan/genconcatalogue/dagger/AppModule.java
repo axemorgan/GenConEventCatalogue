@@ -16,10 +16,10 @@ import com.axemorgan.genconcatalogue.events.Search;
 import com.axemorgan.genconcatalogue.events.UpdateEvent;
 import com.axemorgan.genconcatalogue.filters.FilterContract;
 import com.axemorgan.genconcatalogue.filters.FilterPresenter;
-import com.axemorgan.genconcatalogue.schedule.DayContract;
-import com.axemorgan.genconcatalogue.schedule.DayFragmentPresenter;
 import com.axemorgan.genconcatalogue.schedule.ScheduleContract;
 import com.axemorgan.genconcatalogue.schedule.SchedulePresenter;
+import com.axemorgan.genconcatalogue.schedule.day.DayContract;
+import com.axemorgan.genconcatalogue.schedule.day.DayFragmentPresenter;
 
 import javax.inject.Singleton;
 

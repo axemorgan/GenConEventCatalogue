@@ -1,4 +1,4 @@
-package com.axemorgan.genconcatalogue.schedule
+package com.axemorgan.genconcatalogue.schedule.day
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,6 +12,7 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.axemorgan.genconcatalogue.CatalogueApplication
 import com.axemorgan.genconcatalogue.R
+import com.axemorgan.genconcatalogue.event_detail.EventDetailActivity
 import com.axemorgan.genconcatalogue.events.Day
 import com.axemorgan.genconcatalogue.events.Event
 import javax.inject.Inject
@@ -37,7 +38,7 @@ class DayFragment : Fragment(), DayContract.View {
     @Inject
     lateinit var presenter: DayContract.Presenter
 
-    private val adapter: ScheduledEventAdapter = ScheduledEventAdapter()
+    private val adapter: ScheduledEventAdapter = ScheduledEventAdapter({ startActivity(EventDetailActivity.forEvent(context, it.id)) })
     private lateinit var unbinder: Unbinder
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,8 +72,7 @@ class DayFragment : Fragment(), DayContract.View {
     }
 
     override fun showEvents(events: List<Event>) {
-        adapter.events = events
+        adapter.setEvents(events)
     }
-
 }
 
