@@ -36,6 +36,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static android.view.View.GONE;
+
 public class EventListFragment extends Fragment implements EventListContract.View, EventsAdapter.Listener,
         SearchView.OnCloseListener, SearchView.OnQueryTextListener, SearchContract.View,
         EventUpdateBroadcastReceiver.Listener {
@@ -57,6 +59,8 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
     TextView resultCountView;
     @BindView(R.id.search_view)
     SearchView searchView;
+    @BindView(R.id.event_list_loading)
+    View loading;
     @BindView(R.id.loading_bottom_sheet)
     View bottomSheet;
     @BindView(R.id.toolbar)
@@ -164,20 +168,30 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
     }
 
     @Override
+    public void showLoading() {
+        recyclerView.setVisibility(GONE);
+        emptyView.setVisibility(GONE);
+        resultCountView.setVisibility(GONE);
+        loading.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void showEvents(List<Event> events) {
         adapter.setEvents(events);
         resultCountView.setText(getResources().getQuantityString(R.plurals.event_list_search_result_count, events.size(), NumberFormats.INSTANCE.format(events.size())));
 
         recyclerView.setVisibility(View.VISIBLE);
         resultCountView.setVisibility(View.VISIBLE);
-        emptyView.setVisibility(View.GONE);
+        emptyView.setVisibility(GONE);
+        loading.setVisibility(View.GONE);
     }
 
     @Override
     public void showNoEventsFound() {
-        recyclerView.setVisibility(View.GONE);
-        resultCountView.setVisibility(View.GONE);
+        recyclerView.setVisibility(GONE);
+        resultCountView.setVisibility(GONE);
         emptyView.setVisibility(View.VISIBLE);
+        loading.setVisibility(View.GONE);
     }
 
     @Override
@@ -224,7 +238,7 @@ public class EventListFragment extends Fragment implements EventListContract.Vie
     }
 
     private void hideSearchBar() {
-        searchView.setVisibility(View.GONE);
+        searchView.setVisibility(GONE);
 
         searchMenuItem.setVisible(true);
     }

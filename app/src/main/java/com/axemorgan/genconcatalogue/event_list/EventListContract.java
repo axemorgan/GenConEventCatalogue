@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface EventListContract {
     interface View {
+        void showLoading();
+
         void showEvents(List<Event> events);
 
         void showNoEventsFound();

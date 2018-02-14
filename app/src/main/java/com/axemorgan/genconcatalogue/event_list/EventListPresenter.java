@@ -76,6 +76,11 @@ public class EventListPresenter extends EventListContract.Presenter implements F
         search.using(searchModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(subscription -> {
+                    if (getView() != null) {
+                        getViewOrThrow().showLoading();
+                    }
+                })
                 .subscribe(searchSubscription);
 
         return null;
@@ -111,6 +116,11 @@ public class EventListPresenter extends EventListContract.Presenter implements F
         eventDao.getAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(subscription -> {
+                    if (getView() != null) {
+                        getViewOrThrow().showLoading();
+                    }
+                })
                 .subscribe(eventFetchSubscription);
     }
 }

@@ -32,6 +32,7 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolder> {
 
     EventsAdapter(Listener listener) {
         this.listener = listener;
+        this.setHasStableIds(true);
     }
 
     @Override
@@ -69,6 +70,11 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolder> {
     @Override
     public int getItemCount() {
         return events.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return events.get(position).getId().hashCode();
     }
 
     @Override
