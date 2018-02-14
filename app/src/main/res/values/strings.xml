@@ -26,4 +26,5 @@
     </plurals>
 
     <string name="filters_header">Filter Events</string>
+    <string name="no_events_for_day">No events scheduled for this day</string>
 </resources>

@@ -11,6 +11,13 @@ class DayFragmentPresenter @Inject constructor(val eventDao: EventDao) : DayCont
         eventDao.getSavedEventsForDay(viewOrThrow.getDay().startTime, viewOrThrow.getDay().endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { events -> view?.showEvents(events) }
+                .doOnSubscribe { viewOrThrow.showLoading() }
+                .subscribe { events ->
+                    if (events.size > 0) {
+                        view?.showEvents(events)
+                    } else {
+                        view?.showEmpty()
+                    }
+                }
     }
 }

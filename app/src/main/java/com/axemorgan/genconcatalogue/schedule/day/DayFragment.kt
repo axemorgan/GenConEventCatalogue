@@ -35,6 +35,12 @@ class DayFragment : Fragment(), DayContract.View {
     @BindView(R.id.day_schedule_recycler)
     lateinit var recycler: RecyclerView
 
+    @BindView(R.id.day_schedule_loading)
+    lateinit var loadingView: View
+
+    @BindView(R.id.day_schedule_empty)
+    lateinit var emptyView: View
+
     @Inject
     lateinit var presenter: DayContract.Presenter
 
@@ -73,6 +79,22 @@ class DayFragment : Fragment(), DayContract.View {
 
     override fun showEvents(events: List<Event>) {
         adapter.setEvents(events)
+        loadingView.visibility = View.GONE
+        recycler.visibility = View.VISIBLE
+        emptyView.visibility = View.GONE
+    }
+
+    override fun showEmpty() {
+        recycler.visibility = View.GONE
+        loadingView.visibility = View.GONE
+        emptyView.visibility = View.VISIBLE
+    }
+
+
+    override fun showLoading() {
+        loadingView.visibility = View.VISIBLE
+        recycler.visibility = View.GONE
+        emptyView.visibility = View.GONE
     }
 }
 

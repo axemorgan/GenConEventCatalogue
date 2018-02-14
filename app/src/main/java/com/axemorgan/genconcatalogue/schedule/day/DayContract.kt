@@ -10,6 +10,10 @@ interface DayContract {
         fun getDay(): Day
 
         fun showEvents(events: List<Event>)
+
+        fun showLoading()
+
+        fun showEmpty()
     }
 
     abstract class Presenter() : AbstractPresenter<View>() {
