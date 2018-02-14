@@ -38,12 +38,9 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolder> {
     @Override
     public EventHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final EventHolder eventHolder = new EventHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.event_list_item, parent, false));
-        eventHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (eventHolder.getAdapterPosition() != RecyclerView.NO_POSITION) {
-                    listener.onEventPressed(events.get(eventHolder.getAdapterPosition()));
-                }
+        eventHolder.itemView.setOnClickListener(v -> {
+            if (eventHolder.getAdapterPosition() != RecyclerView.NO_POSITION) {
+                listener.onEventPressed(events.get(eventHolder.getAdapterPosition()));
             }
         });
         return eventHolder;
