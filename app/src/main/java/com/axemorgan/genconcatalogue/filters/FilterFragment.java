@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import com.axemorgan.genconcatalogue.CatalogueApplication;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnItemSelected;
 import butterknife.Unbinder;
 
@@ -34,6 +36,8 @@ public class FilterFragment extends Fragment implements FilterContract.View {
     Spinner eventTypeSpinner;
     @BindView(R.id.filters_age_requirement_spinner)
     Spinner ageRequirementSpinner;
+    @BindView(R.id.filters_only_available_checkbox)
+    CheckBox noSoldOutEventsCheckbox;
 
     private ArrayAdapter<SpinnerItem<String>> eventTypeAdapter;
     private ArrayAdapter<SpinnerItem<String>> ageRequirementAdapter;
@@ -89,6 +93,11 @@ public class FilterFragment extends Fragment implements FilterContract.View {
         if (item != null) {
             presenter.onEventTypeFilterSelected(item.getValue());
         }
+    }
+
+    @OnCheckedChanged(R.id.filters_only_available_checkbox)
+    public void onOnlyAvailableEventsChecked(boolean checked) {
+        
     }
 
     @OnItemSelected(R.id.filters_age_requirement_spinner)

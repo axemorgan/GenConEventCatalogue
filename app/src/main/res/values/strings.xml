@@ -27,4 +27,5 @@
 
     <string name="filters_header">Filter Events</string>
     <string name="no_events_for_day">No events scheduled for this day</string>
+    <string name="filters_no_sold_out_events">Only events with tickets remaining</string>
 </resources>
