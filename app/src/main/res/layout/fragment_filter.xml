@@ -1,19 +1,19 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="280dp"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:clickable="true"
-    tools:context="com.axemorgan.genconcatalogue.filters.FilterFragment"
-    tools:layout_gravity="end">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="280dp"
+                                             android:layout_height="match_parent"
+                                             android:background="#FFFFFF"
+                                             android:clickable="true"
+                                             tools:context="com.axemorgan.genconcatalogue.filters.FilterFragment"
+                                             tools:layout_gravity="end">
 
     <TextView
         android:id="@+id/filters_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="@string/filters_header" />
+        android:text="@string/filters_header"/>
 
     <Spinner
         android:id="@+id/filters_event_type_spinner"
@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/filters_header"
-        tools:listitem="@android:layout/simple_list_item_1" />
+        tools:listitem="@android:layout/simple_list_item_1"/>
 
     <Spinner
         android:id="@+id/filters_age_requirement_spinner"
@@ -33,15 +33,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/filters_event_type_spinner"
-        tools:listitem="@android:layout/simple_list_item_1" />
+        tools:listitem="@android:layout/simple_list_item_1"/>
 
-    <CheckBox
+    <Switch
         android:id="@+id/filters_only_available_checkbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:minHeight="48dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="16dp"
         android:text="@string/filters_no_sold_out_events"
-        app:layout_constraintTop_toBottomOf="@id/filters_age_requirement_spinner" />
+        app:layout_constraintTop_toBottomOf="@id/filters_age_requirement_spinner"/>
 
 </android.support.constraint.ConstraintLayout>

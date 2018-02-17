@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.axemorgan.genconcatalogue.R;
+import com.axemorgan.genconcatalogue.components.DateFormats;
 import com.axemorgan.genconcatalogue.events.Event;
 
 import org.threeten.bp.ZoneId;
@@ -55,12 +56,14 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolder> {
         holder.description.setText(event.getShortDescription());
 
         if (event.getStartDate() != null && event.getEndDate() != null) {
-            holder.eventTime.setText(
-                    event.getStartDate().format(DateTimeFormatter.ofPattern("E h:mma").withZone(ZoneId.systemDefault()))
-                            + "\u2014" + event.getEndDate().format(DateTimeFormatter.ofPattern("h:mma").withZone(ZoneId.systemDefault())));
+
+            holder.eventTime.setText(holder.itemView.getContext().getString(R.string.event_list_item_date,
+                    event.getStartDate().format(DateTimeFormatter.ofPattern("E").withZone(ZoneId.systemDefault())),
+                    DateFormats.INSTANCE.formatToHour(event.getStartDate()),
+                    DateFormats.INSTANCE.formatToHour(event.getEndDate())));
         }
 
-        holder.ticketCount.setText(holder.itemView.getContext().getString(R.string.event_list_item_available_tickets, event.getAvailableTickets()));
+        holder.ticketCount.setText(holder.itemView.getContext().getString(R.string.event_list_item_available_tickets, event.getAvailableTickets(), event.getMaximumPlayers()));
     }
 
 

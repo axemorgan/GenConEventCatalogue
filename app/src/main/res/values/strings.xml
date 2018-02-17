@@ -12,7 +12,7 @@
     <string name="event_detail_materials_provided">Materials Provided</string>
     <string name="event_detail_materials_not_provided">Materials Not Provided</string>
 
-    <string name="event_list_item_available_tickets">Available tickets: %d</string>
+    <string name="event_list_item_available_tickets">Available tickets: %d/%d</string>
     <string name="event_list_no_events_found">Sorry, no events found :(</string>
 
     <plurals name="event_list_search_result_count">
@@ -28,4 +28,6 @@
     <string name="filters_header">Filter Events</string>
     <string name="no_events_for_day">No events scheduled for this day</string>
     <string name="filters_no_sold_out_events">Only events with tickets remaining</string>
+    <string name="loading_events_message">Loading events…</string>
+    <string name="event_list_item_date">%s %s\u2014%s</string>
 </resources>

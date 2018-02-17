@@ -1,6 +1,5 @@
 package com.axemorgan.genconcatalogue.components
 
-import org.threeten.bp.LocalTime
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
@@ -32,7 +31,7 @@ object DateFormats {
         return dayFormat.value.format(date)
     }
 
-    fun formatToHour(time: LocalTime): String {
+    fun formatToHour(time: TemporalAccessor): String {
         return localTimeHourFormatter.value.format(time)
     }
 }

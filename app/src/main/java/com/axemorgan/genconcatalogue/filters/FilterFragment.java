@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import com.axemorgan.genconcatalogue.CatalogueApplication;
 import com.axemorgan.genconcatalogue.R;
@@ -37,7 +37,7 @@ public class FilterFragment extends Fragment implements FilterContract.View {
     @BindView(R.id.filters_age_requirement_spinner)
     Spinner ageRequirementSpinner;
     @BindView(R.id.filters_only_available_checkbox)
-    CheckBox noSoldOutEventsCheckbox;
+    Switch noSoldOutEventsCheckbox;
 
     private ArrayAdapter<SpinnerItem<String>> eventTypeAdapter;
     private ArrayAdapter<SpinnerItem<String>> ageRequirementAdapter;
