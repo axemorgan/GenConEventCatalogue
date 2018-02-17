@@ -18,5 +18,7 @@ public interface FilterContract {
         public abstract void onEventTypeFilterSelected(String type);
 
         public abstract void onAgeRequirementFilterSelected(String item);
+
+        public abstract void onAvailableEventsOnlyChecked(boolean only);
     }
 }

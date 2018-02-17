@@ -17,17 +17,17 @@ public interface EventDao {
     @Query("SELECT * FROM Event")
     Flowable<List<Event>> getAll();
 
-    @Query("SELECT * FROM Event WHERE title LIKE :query")
-    Flowable<List<Event>> search(String query);
+    @Query("SELECT * FROM Event WHERE title LIKE :query AND available_tickets >= :minimumTickets")
+    Flowable<List<Event>> search(String query, int minimumTickets);
 
-    @Query("SELECT * FROM Event WHERE title like :query AND event_type = :eventType")
-    Flowable<List<Event>> searchWithEventType(String query, String eventType);
+    @Query("SELECT * FROM Event WHERE title like :query AND event_type = :eventType AND available_tickets >= :minimumTickets")
+    Flowable<List<Event>> searchWithEventType(String query, String eventType, int minimumTickets);
 
-    @Query("SELECT * FROM Event WHERE title LIKE :query AND age_required = :ageRequirement")
-    Flowable<List<Event>> searchWithAgeRequirement(String query, String ageRequirement);
+    @Query("SELECT * FROM Event WHERE title LIKE :query AND age_required = :ageRequirement AND available_tickets >= :minimumTickets")
+    Flowable<List<Event>> searchWithAgeRequirement(String query, String ageRequirement, int minimumTickets);
 
-    @Query("SELECT * FROM Event WHERE title LIKE :query AND event_type = :eventType AND age_required = :ageRequirement")
-    Flowable<List<Event>> searchWithTypeAndAgeRequirement(String query, String eventType, String ageRequirement);
+    @Query("SELECT * FROM Event WHERE title LIKE :query AND event_type = :eventType AND age_required = :ageRequirement AND available_tickets >= :minimumTickets")
+    Flowable<List<Event>> searchWithTypeAndAgeRequirement(String query, String eventType, String ageRequirement, int minimumTickets);
 
     @Query("SELECT * FROM Event WHERE id == :oneId")
     Single<Event> byId(String oneId);

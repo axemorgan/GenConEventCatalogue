@@ -27,6 +27,12 @@ class SearchModel @Inject constructor() {
         }
     }
 
+    var availableTicketsOnly: Boolean by Delegates.observable(false) { _, oldValue, newValue ->
+        if (oldValue != newValue) {
+            this.notifyObservers()
+        }
+    }
+
     fun addObserver(observer: (SearchModel) -> Unit) {
         observers.add(observer)
     }

@@ -15,15 +15,23 @@ class Search @Inject constructor(val eventDao: EventDao) {
         // TODO this is going to get out of hand very quickly
         return if (searchModel.eventTypeFilter.isEmpty()) {
             if (!searchModel.ageRequirementFilter.isEmpty()) {
-                eventDao.searchWithAgeRequirement("%" + searchModel.query + "%", searchModel.ageRequirementFilter)
+                eventDao.searchWithAgeRequirement("%" + searchModel.query + "%",
+                        searchModel.ageRequirementFilter,
+                        if (searchModel.availableTicketsOnly) 1 else 0)
             } else {
-                eventDao.search("%" + searchModel.query + "%")
+                eventDao.search("%" + searchModel.query + "%",
+                        if (searchModel.availableTicketsOnly) 1 else 0)
             }
         } else {
             if (!searchModel.ageRequirementFilter.isEmpty()) {
-                eventDao.searchWithTypeAndAgeRequirement("%" + searchModel.query + "%", searchModel.eventTypeFilter, searchModel.ageRequirementFilter)
+                eventDao.searchWithTypeAndAgeRequirement("%" + searchModel.query + "%",
+                        searchModel.eventTypeFilter,
+                        searchModel.ageRequirementFilter,
+                        if (searchModel.availableTicketsOnly) 1 else 0)
             } else {
-                eventDao.searchWithEventType("%" + searchModel.query + "%", searchModel.eventTypeFilter)
+                eventDao.searchWithEventType("%" + searchModel.query + "%",
+                        searchModel.eventTypeFilter,
+                        if (searchModel.availableTicketsOnly) 1 else 0)
             }
         }
     }

@@ -86,6 +86,11 @@ public class FilterPresenter extends FilterContract.Presenter {
         searchModel.setAgeRequirementFilter(item);
     }
 
+    @Override
+    public void onAvailableEventsOnlyChecked(boolean checked) {
+        searchModel.setAvailableTicketsOnly(checked);
+    }
+
     private List<SpinnerItem<String>> getEventTypeSpinnerItems(List<String> eventTypes) {
         ArrayList<SpinnerItem<String>> types = new ArrayList<>(eventTypes.size() + 1);
         types.add(new SpinnerItem<>("All Event Types", NO_EVENT_TYPE_FILTER));

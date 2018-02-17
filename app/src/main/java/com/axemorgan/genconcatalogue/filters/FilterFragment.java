@@ -97,7 +97,7 @@ public class FilterFragment extends Fragment implements FilterContract.View {
 
     @OnCheckedChanged(R.id.filters_only_available_checkbox)
     public void onOnlyAvailableEventsChecked(boolean checked) {
-        
+        presenter.onAvailableEventsOnlyChecked(checked);
     }
 
     @OnItemSelected(R.id.filters_age_requirement_spinner)
